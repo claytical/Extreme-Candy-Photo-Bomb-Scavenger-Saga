@@ -62,11 +62,14 @@ void testApp::update(){
                 shooter.bullets[shooter.bulletBeingShot].transform = true;
                 Candy tmpCandy;
                 tmpCandy.create(shooter.bullets[shooter.bulletBeingShot].position.x, candies[i].position.y + GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, shooter.bullets[shooter.bulletBeingShot].color);
+                
+                /*
                 if(findNeighbors(tmpCandy)) {
                     tmpCandy.matched = true;
                 }
-
+*/
                 candies.push_back(tmpCandy);
+                findMatchingColors(candies[candies.size()-1]);
                 shooter.bulletBeingShot = -1;
                 break;
 
@@ -88,6 +91,53 @@ bool testApp::done(Bullet &bullet) {
         return true;
     }
     return false;
+}
+
+void testApp::findMatchingColors(Candy &c) {
+    float upNeighborX = c.position.x;
+    float upNeighborY = c.position.y - GRID_SQUARE_SIZE;
+    float downNeighborX = c.position.x;
+    float downNeighborY = c.position.y + GRID_SQUARE_SIZE;
+    float leftNeighborX = c.position.x - GRID_SQUARE_SIZE;
+    float leftNeighborY = c.position.y;
+    float rightNeighborX = c.position.x + GRID_SQUARE_SIZE;
+    float rightNeighborY = c.position.y;
+    
+    for (int i = 0; i < candies.size() - 1; i++) {
+        if (!candies[i].matched) {
+            //UP
+            if (candies[i].position.x == upNeighborX && candies[i].position.y == upNeighborY) {
+                if (candies[i].color == c.color) {
+                    candies[i].matched = true;
+                }
+            }
+            //DOWN
+            if (candies[i].position.x == downNeighborX && candies[i].position.y == downNeighborY) {
+                if (candies[i].color == c.color) {
+                    candies[i].matched = true;
+                    
+                }
+            }
+            //LEFT
+            if (candies[i].position.x == leftNeighborX && candies[i].position.y == leftNeighborY) {
+                if (candies[i].color == c.color) {
+                    candies[i].matched = true;
+                    
+                }
+            }
+            //RIGHT
+            if (candies[i].position.x == rightNeighborX && candies[i].position.y == rightNeighborY) {
+                if (candies[i].color == c.color) {
+                    candies[i].matched = true;
+                    
+                }
+            }
+            if (candies[i].matched) {
+                c.matched = true;
+                findMatchingColors(candies[i]);
+            }
+        }
+    }
 }
 
 bool testApp::findNeighbors(Candy c) {

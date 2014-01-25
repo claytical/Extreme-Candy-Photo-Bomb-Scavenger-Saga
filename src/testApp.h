@@ -38,6 +38,8 @@ class testApp : public ofxiPhoneApp{
         static bool matched(Candy &candy);
         static bool done(Bullet &bullet);
     
+    
+        void findMatchingColors(Candy &c);
         bool findNorthernNeighbors(Candy c);
         bool findSouthernNeighbors(Candy c);
         bool findLeftNeighbors(Candy c);
