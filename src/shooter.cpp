@@ -65,5 +65,7 @@ void Shooter::shoot(float x) {
         }
     }
     bullets[bulletBeingShot].beingShot = true;
-
+    Bullet newBullet;
+    newBullet.create(bullets[bulletBeingShot].position.x, position.y, bullet_width, bullet_width, ofColor(255,255,255));
+    bullets.push_back(newBullet);
 }

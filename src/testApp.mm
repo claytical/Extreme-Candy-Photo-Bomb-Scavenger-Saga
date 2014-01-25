@@ -66,6 +66,13 @@ void testApp::update(){
                     candies[i].matched = true;
                     shooter.bullets[shooter.bulletBeingShot].destroy = true;
                     shooter.bulletBeingShot = -1;
+                    //now find northern neighbor and check color
+                    int northernNeighbor = findNorthernNeighbor(candies[i]);
+                    cout << "northern neighbor is : " << northernNeighbor << endl;
+                    if (candies[i].color == candies[northernNeighbor].color) {
+                        cout << "found northern neighbor of matching color" << endl;
+                        candies[northernNeighbor].matched = true;
+                    }
                 }
                 else {
                     //if color doesn't match, create candy where the bullet is
@@ -82,6 +89,7 @@ void testApp::update(){
     }
     //remove the bullet
     ofRemove(shooter.bullets, done);
+    //remove any matched candies
     ofRemove(candies, matched);
 
 }
@@ -94,6 +102,17 @@ bool testApp::done(Bullet &bullet) {
         return true;
     }
     return false;
+}
+
+int testApp::findNorthernNeighbor(Candy c) {
+    float neighborX = c.position.x;
+    float neighborY = c.position.y - GRID_SQUARE_SIZE;
+    for (int i = 0; i < candies.size(); i++) {
+        if (candies[i].position.y == neighborY && candies[i].position.x == neighborX) {
+            return i;
+        }
+    }
+    return -1;
 }
 
 //--------------------------------------------------------------
