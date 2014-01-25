@@ -21,8 +21,7 @@ public:
     ofColor color;
     ofPoint position;
     int bullet_width;
-    int bulletBeingShot;
-  //  int height;
+    float bulletBeingShot;
     vector<Bullet> bullets;
     
 };
