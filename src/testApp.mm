@@ -65,6 +65,7 @@ void testApp::update(){
                 if(findNeighbors(tmpCandy)) {
                     tmpCandy.matched = true;
                 }
+
                 candies.push_back(tmpCandy);
                 shooter.bulletBeingShot = -1;
                 break;
@@ -101,7 +102,7 @@ bool testApp::findNorthernNeighbors(Candy c) {
     float neighborX = c.position.x;
     float neighborY = c.position.y - GRID_SQUARE_SIZE;
     for (int i = 0; i < candies.size(); i++) {
-        if (candies[i].position.y == neighborY && candies[i].position.x == neighborX) {
+        if (candies[i].position.y == neighborY && candies[i].position.x == neighborX && !candies[i].matched) {
             if (candies[i].color == c.color) {
                 candies[i].matched = true;
                 findNorthernNeighbors(candies[i]);
@@ -118,7 +119,7 @@ bool testApp::findSouthernNeighbors(Candy c) {
     float neighborX = c.position.x;
     float neighborY = c.position.y + GRID_SQUARE_SIZE;
     for (int i = 0; i < candies.size(); i++) {
-        if (candies[i].position.y == neighborY && candies[i].position.x == neighborX) {
+        if (candies[i].position.y == neighborY && candies[i].position.x == neighborX && !candies[i].matched) {
             if (candies[i].color == c.color) {
                 findLeftNeighbors(candies[i]);
                 findRightNeighbors(candies[i]);
@@ -134,7 +135,7 @@ bool testApp::findLeftNeighbors(Candy c) {
     float neighborX = c.position.x - GRID_SQUARE_SIZE;
     float neighborY = c.position.y;
     for (int i = 0; i < candies.size(); i++) {
-        if (candies[i].position.y == neighborY && candies[i].position.x == neighborX) {
+        if (candies[i].position.y == neighborY && candies[i].position.x == neighborX && !candies[i].matched) {
             if (candies[i].color == c.color) {
                 candies[i].matched = true;
                 findNorthernNeighbors(candies[i]);
@@ -151,7 +152,7 @@ bool testApp::findRightNeighbors(Candy c) {
     float neighborX = c.position.x + GRID_SQUARE_SIZE;
     float neighborY = c.position.y;
     for (int i = 0; i < candies.size(); i++) {
-        if (candies[i].position.y == neighborY && candies[i].position.x == neighborX) {
+        if (candies[i].position.y == neighborY && candies[i].position.x == neighborX && !candies[i].matched) {
             if (candies[i].color == c.color) {
                 candies[i].matched = true;
                 findNorthernNeighbors(candies[i]);
