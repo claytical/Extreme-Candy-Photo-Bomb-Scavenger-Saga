@@ -15,7 +15,7 @@ void Shooter::display() {
 }
 
 void Shooter::create(float x, float y, int w, int h) {
-    bulletBeingShot = -1;
+    bulletBeingShot = false;
     position.set(x, y);
     bullet_width = w;
     for (int x = 0; x < ofGetWidth(); x+= bullet_width) {
@@ -46,7 +46,6 @@ void Shooter::create(float x, float y, int w, int h) {
 void Shooter::reload() {
     bullets.clear();
     for (int x = 0; x < ofGetWidth(); x+= bullet_width) {
-    //for (int i = 0; i < 5; i++) {
         Bullet tmpBullet;
         tmpBullet.create(x, position.y, bullet_width, bullet_width, ofColor(255,255,0));
         bullets.push_back(tmpBullet);
