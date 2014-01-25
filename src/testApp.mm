@@ -59,32 +59,16 @@ void testApp::update(){
                 cout << "hit something" << endl;
                 //stop the trajectory
                 shooter.bullets[shooter.bulletBeingShot].beingShot = false;
-                if (shooter.bullets[shooter.bulletBeingShot].color == candies[i].color) {
-                    //when hit, if bullet matches color of hit object, destroy candy and bullet
-
-                    cout << "color matches, destroying candy and bullet" << endl;
-                    candies[i].matched = true;
-                    shooter.bullets[shooter.bulletBeingShot].destroy = true;
-                    shooter.bulletBeingShot = -1;
-                    //now find northern neighbor and check color
-                    findNorthernNeighbor(candies[i]);
-//                    int northernNeighbor = findNorthernNeighbor(candies[i]);
-//                    cout << "northern neighbor is : " << northernNeighbor << endl;
-//                    if (candies[i].color == candies[northernNeighbor].color) {
-//                        cout << "found northern neighbor of matching color" << endl;
-//                        candies[northernNeighbor].matched = true;
-//                    }
+                shooter.bullets[shooter.bulletBeingShot].transform = true;
+                Candy tmpCandy;
+                tmpCandy.create(shooter.bullets[shooter.bulletBeingShot].position.x, candies[i].position.y + GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, shooter.bullets[shooter.bulletBeingShot].color);
+                if(findNeighbors(tmpCandy)) {
+                    tmpCandy.matched = true;
                 }
-                else {
-                    //if color doesn't match, create candy where the bullet is
+                candies.push_back(tmpCandy);
+                shooter.bulletBeingShot = -1;
+                break;
 
-                    shooter.bullets[shooter.bulletBeingShot].transform = true;
-                    Candy tmpCandy;
-                    tmpCandy.create(shooter.bullets[shooter.bulletBeingShot].position.x, candies[i].position.y + GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, shooter.bullets[shooter.bulletBeingShot].color);
-                    candies.push_back(tmpCandy);
-                    shooter.bulletBeingShot = -1;
-                    break;
-                }
             }
         }
     }
@@ -105,20 +89,81 @@ bool testApp::done(Bullet &bullet) {
     return false;
 }
 
-void testApp::findNorthernNeighbor(Candy c) {
+bool testApp::findNeighbors(Candy c) {
+    if(findNorthernNeighbors(c) || findLeftNeighbors(c) || findRightNeighbors(c)) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+bool testApp::findNorthernNeighbors(Candy c) {
     float neighborX = c.position.x;
     float neighborY = c.position.y - GRID_SQUARE_SIZE;
     for (int i = 0; i < candies.size(); i++) {
         if (candies[i].position.y == neighborY && candies[i].position.x == neighborX) {
             if (candies[i].color == c.color) {
                 candies[i].matched = true;
-                findNorthernNeighbor(candies[i]);
+                findNorthernNeighbors(candies[i]);
+                findLeftNeighbors(candies[i]);
+                findRightNeighbors(candies[i]);
+                return true;
             }
-//            return i;
         }
     }
-//    return -1;
+    return false;
 }
+
+bool testApp::findSouthernNeighbors(Candy c) {
+    float neighborX = c.position.x;
+    float neighborY = c.position.y + GRID_SQUARE_SIZE;
+    for (int i = 0; i < candies.size(); i++) {
+        if (candies[i].position.y == neighborY && candies[i].position.x == neighborX) {
+            if (candies[i].color == c.color) {
+                findLeftNeighbors(candies[i]);
+                findRightNeighbors(candies[i]);
+                findSouthernNeighbors(candies[i]);
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool testApp::findLeftNeighbors(Candy c) {
+    float neighborX = c.position.x - GRID_SQUARE_SIZE;
+    float neighborY = c.position.y;
+    for (int i = 0; i < candies.size(); i++) {
+        if (candies[i].position.y == neighborY && candies[i].position.x == neighborX) {
+            if (candies[i].color == c.color) {
+                candies[i].matched = true;
+                findNorthernNeighbors(candies[i]);
+                findSouthernNeighbors(candies[i]);
+                findLeftNeighbors(candies[i]);
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool testApp::findRightNeighbors(Candy c) {
+    float neighborX = c.position.x + GRID_SQUARE_SIZE;
+    float neighborY = c.position.y;
+    for (int i = 0; i < candies.size(); i++) {
+        if (candies[i].position.y == neighborY && candies[i].position.x == neighborX) {
+            if (candies[i].color == c.color) {
+                candies[i].matched = true;
+                findNorthernNeighbors(candies[i]);
+                findSouthernNeighbors(candies[i]);
+                findRightNeighbors(candies[i]);
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 
 //--------------------------------------------------------------
 void testApp::draw(){	

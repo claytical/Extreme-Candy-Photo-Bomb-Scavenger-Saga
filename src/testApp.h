@@ -38,7 +38,11 @@ class testApp : public ofxiPhoneApp{
         static bool matched(Candy &candy);
         static bool done(Bullet &bullet);
     
-        void findNorthernNeighbor(Candy c);
+        bool findNorthernNeighbors(Candy c);
+        bool findSouthernNeighbors(Candy c);
+        bool findLeftNeighbors(Candy c);
+        bool findRightNeighbors(Candy c);
+        bool findNeighbors(Candy c);
     
         ofVideoGrabber vidGrabber;
         ofxCvColorImage	colorImg;
