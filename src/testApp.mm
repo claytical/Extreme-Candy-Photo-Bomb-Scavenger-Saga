@@ -46,20 +46,54 @@ void testApp::setup(){
                 candies.push_back(tmpCandy);
             }
         }
-    shooter.create(ofGetWidth()/2, ofGetHeight() - TOP_PADDING, 20, 20);
+    shooter.create(ofGetWidth(), ofGetHeight() - (TOP_PADDING*4), GRID_SQUARE_SIZE, GRID_SQUARE_SIZE);
     cout << candies.size() << " candies created" << endl;
 
 }
 
 //--------------------------------------------------------------
 void testApp::update(){
-    for (int i = 0; i < candies.size(); i++) {
-        if (hitTest(candies[i], shooter.bullets[0])) {
-            cout << "hit something" << endl;
-            shooter.bullets[0].beingShot = false;
+    if (shooter.bulletBeingShot != -1) {
+        for (int i = 0; i < candies.size(); i++) {
+            if (hitTest(candies[i], shooter.bullets[shooter.bulletBeingShot])) {
+                cout << "hit something" << endl;
+                //stop the trajectory
+                shooter.bullets[shooter.bulletBeingShot].beingShot = false;
+                if (shooter.bullets[shooter.bulletBeingShot].color == candies[i].color) {
+                    //when hit, if bullet matches color of hit object, destroy candy and bullet
+
+                    cout << "color matches, destroying candy and bullet" << endl;
+                    candies[i].matched = true;
+                    shooter.bullets[shooter.bulletBeingShot].destroy = true;
+                    shooter.bulletBeingShot = -1;
+                }
+                else {
+                    //if color doesn't match, create candy where the bullet is
+
+                    shooter.bullets[shooter.bulletBeingShot].transform = true;
+                    Candy tmpCandy;
+                    tmpCandy.create(shooter.bullets[shooter.bulletBeingShot].position.x, candies[i].position.y + GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, shooter.bullets[shooter.bulletBeingShot].color);
+                    candies.push_back(tmpCandy);
+                    shooter.bulletBeingShot = -1;
+                    break;
+                }
+            }
         }
     }
+    //remove the bullet
+    ofRemove(shooter.bullets, done);
+    ofRemove(candies, matched);
 
+}
+
+bool testApp::matched(Candy &candy) {
+    return candy.matched;
+}
+bool testApp::done(Bullet &bullet) {
+    if (bullet.transform || bullet.destroy) {
+        return true;
+    }
+    return false;
 }
 
 //--------------------------------------------------------------
@@ -120,6 +154,7 @@ bool testApp::hitTest(Candy candy, Bullet bullet) {
     return false;
 }
 
+
 //--------------------------------------------------------------
 void testApp::exit(){
         
@@ -127,7 +162,6 @@ void testApp::exit(){
 
 //--------------------------------------------------------------
 void testApp::touchDown(ofTouchEventArgs & touch){
-    shooter.shoot();
 }
 
 //--------------------------------------------------------------
@@ -137,7 +171,8 @@ void testApp::touchMoved(ofTouchEventArgs & touch){
     
 //--------------------------------------------------------------
 void testApp::touchUp(ofTouchEventArgs & touch){
-        
+    shooter.shoot(touch.x);
+    
 }
     
 //--------------------------------------------------------------

@@ -35,7 +35,9 @@ class testApp : public ofxiPhoneApp{
     
         void grabImage();
         bool hitTest(Candy candy, Bullet bullet);
-    
+        static bool matched(Candy &candy);
+        static bool done(Bullet &bullet);
+
         ofVideoGrabber vidGrabber;
         ofxCvColorImage	colorImg;
         Shooter shooter;

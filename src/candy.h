@@ -17,6 +17,7 @@ public:
 
     ofColor color;
     ofPoint position;
+    bool matched;
     int width;
     int height;
     

@@ -17,6 +17,8 @@ public:
     void create(float x, float y, int w, int h, ofColor c);
 
     bool beingShot;
+    bool transform;
+    bool destroy;
     ofColor color;
     ofPoint position;
     int width;

@@ -21,5 +21,6 @@ void Candy::create(float x, float y, int w, int h, ofColor c) {
     color = c;
     width = w;
     height = h;
+    matched = false;
 }
 

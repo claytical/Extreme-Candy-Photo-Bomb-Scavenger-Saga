@@ -17,7 +17,9 @@ void Bullet::display() {
 }
 
 void Bullet::create(float x, float y, int w, int h, ofColor c) {
-    speed = 1;
+    speed = 3;
+    transform = false;
+    destroy = false;
     position.set(x, y);
     color = c;
     width = w;

@@ -15,28 +15,55 @@ void Shooter::display() {
 }
 
 void Shooter::create(float x, float y, int w, int h) {
+    bulletBeingShot = -1;
     position.set(x, y);
-    width = w;
-    height = h;
-    for (int i = 0; i < 5; i++) {
+    bullet_width = w;
+    for (int x = 0; x < ofGetWidth(); x+= bullet_width) {
         Bullet tmpBullet;
-        tmpBullet.create(x, y, width, height, ofColor(255,255,0));
+        int colorSelect = ofRandom(0,3);
+        ofColor tmpColor;
+        /* ASSIGN COLOR */
+        switch (colorSelect) {
+            case 0:
+                tmpColor = ofColor(255,0,0);
+                break;
+            case 1:
+                tmpColor = ofColor(0,255,0);
+                break;
+            case 2:
+                tmpColor = ofColor(0,0,255);
+                break;
+            default:
+                tmpColor = ofColor(0,0,0);
+                break;
+        }
+
+        tmpBullet.create(x, y, bullet_width, bullet_width, tmpColor);
         bullets.push_back(tmpBullet);
     }
 }
 
 void Shooter::reload() {
     bullets.clear();
-    for (int i = 0; i < 5; i++) {
+    for (int x = 0; x < ofGetWidth(); x+= bullet_width) {
+    //for (int i = 0; i < 5; i++) {
         Bullet tmpBullet;
-        tmpBullet.create(position.x, position.y, width, height, ofColor(255,255,0));
+        tmpBullet.create(x, position.y, bullet_width, bullet_width, ofColor(255,255,0));
         bullets.push_back(tmpBullet);
     }
     
 }
 
-void Shooter::shoot() {
-    if (bullets.size() > 0) {
-        bullets[0].beingShot = true;
+void Shooter::shoot(float x) {
+    float touchDistanceToBullet = 999999;
+//    bulletBeingShot = -1;
+    for (int i = 0; i < bullets.size(); i++) {
+        float tmpDistance = abs(bullets[i].position.x - x);
+        if (tmpDistance < touchDistanceToBullet) {
+            bulletBeingShot = i;
+            touchDistanceToBullet = tmpDistance;
+        }
     }
+    bullets[bulletBeingShot].beingShot = true;
+
 }

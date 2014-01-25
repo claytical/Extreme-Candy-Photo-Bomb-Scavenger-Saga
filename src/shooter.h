@@ -15,13 +15,14 @@ public:
 	
 	void display();
     void create(float x, float y, int w, int h);
-    void shoot();
+    void shoot(float x);
     void reload();
     
     ofColor color;
     ofPoint position;
-    int width;
-    int height;
+    int bullet_width;
+    int bulletBeingShot;
+  //  int height;
     vector<Bullet> bullets;
     
 };
