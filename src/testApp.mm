@@ -15,13 +15,21 @@
 #define GREEN_TYPE  1
 #define BLUE_TYPE   2
 
+
+#define MAIN_MENU_STATE         0
+#define STARTING_STATE          1
+#define TAKE_PICTURE_STATE      2
+#define LOADING_GAME_STATE      3
+#define PLAYING_GAME_STATE      4
+#define GAME_OVER_STATE         5
+
+
 //--------------------------------------------------------------
 void testApp::setup(){	
 	//ofxiPhoneSetOrientation(OFXIPHONE_ORIENTATION_LANDSCAPE_RIGHT);
         candyImages[RED_TYPE].loadImage("red.png");
         candyImages[GREEN_TYPE].loadImage("green.png");
         candyImages[BLUE_TYPE].loadImage("blue.png");
-    shooter.create(ofGetWidth()/2, ofGetHeight() - (TOP_PADDING*4), GRID_SQUARE_SIZE, GRID_SQUARE_SIZE);
 
         capW = ofGetWidth();
         capH = ofGetHeight();
@@ -37,69 +45,87 @@ void testApp::setup(){
         score = 0;
         candiesCollected = 0;
         ofEnableAlphaBlending();
-    //CREATE GRID
-        for (int x = 0; x < ofGetWidth(); x+= GRID_SQUARE_SIZE) {
-            for (int y = TOP_PADDING; y < ofGetHeight()/2 + TOP_PADDING; y+= GRID_SQUARE_SIZE) {
-                Candy tmpCandy;
-                int colorSelect = ofRandom(0,3);
-
-                /* CREATE CANDY */
-                tmpCandy.create(x, y,GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, colorSelect, &candyImages[colorSelect]);
-                
-                candies.push_back(tmpCandy);
-            }
-        }
-
+        gameState = MAIN_MENU_STATE;
 }
 
 //--------------------------------------------------------------
 void testApp::update(){
-    if (playing) {
-    if (shooter.bulletBeingShot) {
-        for (int i = 0; i < candies.size(); i++) {
-            if (hitTest(candies[i], shooter.bullets[0])) {
-                cout << "hit something" << endl;
-                //stop the trajectory
-                shooter.bullets[0].beingShot = false;
-                shooter.bullets[0].transform = true;
-                Candy tmpCandy;
-                
-                tmpCandy.create(shooter.bullets[0].position.x, candies[i].position.y + GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, shooter.bullets[0].type, &candyImages[shooter.bullets[0].type]);
-
-                candies.push_back(tmpCandy);
-                findMatchingColors(candies[candies.size()-1]);
-                shooter.bulletBeingShot = false;
-                break;
-
-            }
-        }
-        if (shooter.bullets[0].position.y <= TOP_PADDING) {
-            Candy tmpCandy;
+    switch (gameState) {
+        case MAIN_MENU_STATE:
+            break;
+        case STARTING_STATE:
+            break;
+        case TAKE_PICTURE_STATE:
+            break;
+        case LOADING_GAME_STATE:
+            shooter.create(ofGetWidth()/2, ofGetHeight() - (TOP_PADDING*4), GRID_SQUARE_SIZE, GRID_SQUARE_SIZE);
+            randomLevel();
+            startTime = ofGetElapsedTimef();
+            endTime = startTime + GAME_LENGTH;
+            gameState = PLAYING_GAME_STATE;
+            break;
+        case PLAYING_GAME_STATE:
             
-            tmpCandy.create(shooter.bullets[0].position.x, TOP_PADDING, GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, shooter.bullets[0].type, &candyImages[shooter.bullets[0].type]);
-        
+                if (shooter.bulletBeingShot) {
+                    for (int i = 0; i < candies.size(); i++) {
+                        if (hitTest(candies[i], shooter.bullets[0])) {
+                            cout << "hit something" << endl;
+                            //stop the trajectory
+                            shooter.bullets[0].beingShot = false;
+                            shooter.bullets[0].transform = true;
+                            Candy tmpCandy;
+                            
+                            tmpCandy.create(shooter.bullets[0].position.x, candies[i].position.y + GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, shooter.bullets[0].type, &candyImages[shooter.bullets[0].type]);
+                            
+                            candies.push_back(tmpCandy);
+                            findMatchingColors(candies[candies.size()-1]);
+                            shooter.bulletBeingShot = false;
+                            break;
+                            
+                        }
+                    }
+                    
+                    if (shooter.bullets[0].position.y <= TOP_PADDING) {
+                        Candy tmpCandy;
+                        
+                        tmpCandy.create(shooter.bullets[0].position.x, TOP_PADDING, GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, shooter.bullets[0].type, &candyImages[shooter.bullets[0].type]);
+                        
+                        
+                        candies.push_back(tmpCandy);
+                        shooter.bulletBeingShot = false;
+                        shooter.bullets[0].transform = true;
+                        
+                    }
+                    
+                    if (candiesCollected > 0) {
+                        int additionalPoints = (candiesCollected * candiesCollected * 10);
+                        score = score + additionalPoints;
+                        cout << "Additional Points: " << additionalPoints;
+                        cout << "New Score: " << score;
+                        candiesCollected = 0;
+                        
+                    }
+                }
+                
+                //remove the bullet
+                ofRemove(shooter.bullets, done);
+                //remove any matched candies
+                ofRemove(candies, matched);
+                if (ofGetElapsedTimef() > endTime) {
+                    gameState = GAME_OVER_STATE;
+                }
 
-            candies.push_back(tmpCandy);
-            shooter.bulletBeingShot = false;
-            shooter.bullets[0].transform = true;
+            if (tooManyCandies()) {
+                gameState = GAME_OVER_STATE;
+            }
 
-        }
-    }
-    
-    //remove the bullet
-    ofRemove(shooter.bullets, done);
-    //remove any matched candies
-    ofRemove(candies, matched);
-        if (ofGetElapsedTimef() > endTime) {
-            playing = false;
-            grabImage();
-            cout << "new game!" << endl;
-        }
-    }
-    else {
-        startTime = ofGetElapsedTimef();
-        endTime = startTime + GAME_LENGTH;
-        playing = true;
+            
+            break;
+        case GAME_OVER_STATE:
+            break;
+            
+        default:
+            break;
     }
 }
 
@@ -113,6 +139,14 @@ bool testApp::done(Bullet &bullet) {
     return false;
 }
 
+bool testApp::tooManyCandies() {
+    for (int i = 0; i < candies.size(); i++) {
+        if (candies[i].position.y >= 360) {
+            return true;
+        }
+    }
+    return false;
+}
 void testApp::findMatchingColors(Candy &c) {
     float upNeighborX = c.position.x;
     float upNeighborY = c.position.y - GRID_SQUARE_SIZE;
@@ -160,15 +194,29 @@ void testApp::findMatchingColors(Candy &c) {
 
 
 //--------------------------------------------------------------
-void testApp::draw(){	
-//    colorImg.draw(0, 0, ofGetWidth(), ofGetHeight());
-    if (playing) {
+void testApp::draw(){
+    switch (gameState) {
+        case MAIN_MENU_STATE:
+            break;
+        case STARTING_STATE:
+            break;
+        case TAKE_PICTURE_STATE:
+            ofSetColor(255, 255, 255);
+            colorImg.draw(0, 0, ofGetWidth(), ofGetHeight());
+            break;
+        case LOADING_GAME_STATE:
+            break;
+        case PLAYING_GAME_STATE:
+            for (int i = 0; i < candies.size(); i++) {
+                candies[i].display();
+            }
+            shooter.display();
 
-    for (int i = 0; i < candies.size(); i++) {
-        candies[i].display();
+            break;
+        case GAME_OVER_STATE:
+            break;
     }
-        shooter.display();
-    }
+    
 }
 //--------------------------------------------------------------
 void testApp::grabImage() {
@@ -220,37 +268,107 @@ bool testApp::hitTest(Candy candy, Bullet bullet) {
     return false;
 }
 
+void testApp::randomLevel() {
+    candies.clear();
+    for (int x = 0; x < ofGetWidth(); x+= GRID_SQUARE_SIZE) {
+        for (int y = TOP_PADDING; y < ofGetHeight()/2 + TOP_PADDING; y+= GRID_SQUARE_SIZE) {
+            Candy tmpCandy;
+            int colorSelect = ofRandom(0,3);
+            
+            /* CREATE CANDY */
+            tmpCandy.create(x, y,GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, colorSelect, &candyImages[colorSelect]);
+            
+            candies.push_back(tmpCandy);
+        }
+    }
+
+}
 
 //--------------------------------------------------------------
 void testApp::exit(){
-        
+    
 }
 
 //--------------------------------------------------------------
 void testApp::touchDown(ofTouchEventArgs & touch){
-    shooter.move(touch.x, touch.y);
+    switch (gameState) {
+        case MAIN_MENU_STATE:
+            break;
+        case STARTING_STATE:
+            break;
+        case TAKE_PICTURE_STATE:
+            break;
+        case LOADING_GAME_STATE:
+            break;
+        case PLAYING_GAME_STATE:
+            shooter.move(touch.x, touch.y);
+            
+            break;
+        case GAME_OVER_STATE:
+            break;
+    }
+
     
 }
 
 //--------------------------------------------------------------
 void testApp::touchMoved(ofTouchEventArgs & touch){
+    switch (gameState) {
+        case MAIN_MENU_STATE:
+            break;
+        case STARTING_STATE:
+            break;
+        case TAKE_PICTURE_STATE:
+            break;
+        case LOADING_GAME_STATE:
+            break;
+        case PLAYING_GAME_STATE:
+            shooter.move(touch.x, touch.y);
+            
+            break;
+        case GAME_OVER_STATE:
+            break;
+    }
 
-    shooter.move(touch.x, touch.y);
 }
     
 //--------------------------------------------------------------
 void testApp::touchUp(ofTouchEventArgs & touch){
+    switch (gameState) {
+        case MAIN_MENU_STATE:
+            cout << "moving from main menu" << endl;
+            gameState = STARTING_STATE;
+            
+            break;
+        case STARTING_STATE:
+            cout << "moving from starting state" << endl;
+            gameState = TAKE_PICTURE_STATE;
 
-    if (!shooter.bulletBeingShot) {
-        wand.vibrate();
-
-        shooter.shoot();
+            break;
+        case TAKE_PICTURE_STATE:
+            cout << "moving from taking picture state" << endl;
+            gameState = LOADING_GAME_STATE;
+            break;
+        case LOADING_GAME_STATE:
+            cout << "moving from loading game state" << endl;
+            gameState = PLAYING_GAME_STATE;
+            break;
+        case PLAYING_GAME_STATE:
+            if (!shooter.bulletBeingShot) {
+                wand.vibrate();
+                shooter.shoot();
+            }
+            break;
+        case GAME_OVER_STATE:
+            cout << "moving from game over state back to main menu" << endl;
+            gameState = MAIN_MENU_STATE;
+            break;
     }
+
 }
     
 //--------------------------------------------------------------
 void testApp::touchDoubleTap(ofTouchEventArgs & touch){
-    grabImage();
     
 }
     

@@ -49,6 +49,7 @@ void Shooter::display() {
         for (int i = 0; i < bullets.size(); i++) {
             bullets[i].display();
         }
+        staff.draw(position.x - 15, position.y, 80, 160);
     }
 }
 
@@ -56,10 +57,11 @@ void Shooter::create(float x, float y, int w, int h) {
     bulletBeingShot = false;
     position.set(x, y);
     bullet_width = w;
+
     candyImages[RED_TYPE].loadImage("red.png");
     candyImages[GREEN_TYPE].loadImage("green.png");
     candyImages[BLUE_TYPE].loadImage("blue.png");
-
+    staff.loadImage("staff.png");
     //make specific spots for the shot to come from
     for (int x = 0; x < ofGetWidth(); x+=bullet_width) {
         crates.push_back(ofPoint(x, y));

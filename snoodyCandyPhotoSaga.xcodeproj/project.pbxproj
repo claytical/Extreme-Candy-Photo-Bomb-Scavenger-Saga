@@ -23,6 +23,11 @@
 		6F0B049C1894953A00418B49 /* blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F0B04991894953A00418B49 /* blue.png */; };
 		6F0B049D1894953A00418B49 /* green.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F0B049A1894953A00418B49 /* green.png */; };
 		6F0B049E1894953A00418B49 /* red.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F0B049B1894953A00418B49 /* red.png */; };
+		6F0B04A51894B0AE00418B49 /* MainMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B04A31894B0AE00418B49 /* MainMenuViewController.m */; };
+		6F0B04A61894B0AE00418B49 /* MainMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F0B04A41894B0AE00418B49 /* MainMenuViewController.xib */; };
+		6F0B04A81894B6B100418B49 /* candyAsset_scroll_plus_candy.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F0B04A71894B6B100418B49 /* candyAsset_scroll_plus_candy.png */; };
+		6F0B04AA1894B6E900418B49 /* candyAsset_game_title.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F0B04A91894B6E900418B49 /* candyAsset_game_title.png */; };
+		6F0B04AE1894B84B00418B49 /* staff.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F0B04AD1894B84B00418B49 /* staff.png */; };
 		BB16EBD20F2B2A9500518274 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB16EBD10F2B2A9500518274 /* OpenGLES.framework */; };
 		BB16EBD90F2B2AB500518274 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB16EBD80F2B2AB500518274 /* QuartzCore.framework */; };
 		BB24DDCA10DA781C00E9C588 /* ofxiphone-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB24DDC910DA781C00E9C588 /* ofxiphone-Info.plist */; };
@@ -106,6 +111,12 @@
 		6F0B04991894953A00418B49 /* blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = blue.png; path = bin/data/blue.png; sourceTree = "<group>"; };
 		6F0B049A1894953A00418B49 /* green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = green.png; path = bin/data/green.png; sourceTree = "<group>"; };
 		6F0B049B1894953A00418B49 /* red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = red.png; path = bin/data/red.png; sourceTree = "<group>"; };
+		6F0B04A21894B0AE00418B49 /* MainMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenuViewController.h; sourceTree = "<group>"; };
+		6F0B04A31894B0AE00418B49 /* MainMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainMenuViewController.m; sourceTree = "<group>"; };
+		6F0B04A41894B0AE00418B49 /* MainMenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenuViewController.xib; sourceTree = "<group>"; };
+		6F0B04A71894B6B100418B49 /* candyAsset_scroll_plus_candy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = candyAsset_scroll_plus_candy.png; sourceTree = "<group>"; };
+		6F0B04A91894B6E900418B49 /* candyAsset_game_title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = candyAsset_game_title.png; sourceTree = "<group>"; };
+		6F0B04AD1894B84B00418B49 /* staff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = staff.png; path = bin/data/staff.png; sourceTree = "<group>"; };
 		6b907cfbb1b0fede76c41aa0c64ddaf7 /* heap.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = heap.h; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/flann/heap.h; sourceTree = SOURCE_ROOT; };
 		6dd5a3cbb6d5bba1c1354f1b16430892 /* flann.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = flann.hpp; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/flann/flann.hpp; sourceTree = SOURCE_ROOT; };
 		7101cf2125b8b2bf46aa2662e7f42ef2 /* cxcore.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = cxcore.hpp; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv/cxcore.hpp; sourceTree = SOURCE_ROOT; };
@@ -321,6 +332,9 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				6F0B04A21894B0AE00418B49 /* MainMenuViewController.h */,
+				6F0B04A31894B0AE00418B49 /* MainMenuViewController.m */,
+				6F0B04A41894B0AE00418B49 /* MainMenuViewController.xib */,
 				6F0B04981894952C00418B49 /* images */,
 				6F0B04951894079300418B49 /* GameKit.framework */,
 				E4D8936A11527B74007E1F53 /* src */,
@@ -385,6 +399,9 @@
 		6F0B04981894952C00418B49 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				6F0B04AD1894B84B00418B49 /* staff.png */,
+				6F0B04A91894B6E900418B49 /* candyAsset_game_title.png */,
+				6F0B04A71894B6B100418B49 /* candyAsset_scroll_plus_candy.png */,
 				6F0B04991894953A00418B49 /* blue.png */,
 				6F0B049A1894953A00418B49 /* green.png */,
 				6F0B049B1894953A00418B49 /* red.png */,
@@ -670,7 +687,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F0B04AE1894B84B00418B49 /* staff.png in Resources */,
+				6F0B04A61894B0AE00418B49 /* MainMenuViewController.xib in Resources */,
 				BB24DDCA10DA781C00E9C588 /* ofxiphone-Info.plist in Resources */,
+				6F0B04A81894B6B100418B49 /* candyAsset_scroll_plus_candy.png in Resources */,
+				6F0B04AA1894B6E900418B49 /* candyAsset_game_title.png in Resources */,
 				E41D3ED713B38FB500A75A5D /* Project.xcconfig in Resources */,
 				6F0B049D1894953A00418B49 /* green.png in Resources */,
 				6F0B049E1894953A00418B49 /* red.png in Resources */,
@@ -705,6 +726,7 @@
 				E4D8936E11527B74007E1F53 /* main.mm in Sources */,
 				E4D8936F11527B74007E1F53 /* testApp.mm in Sources */,
 				fb09c6b2a1da0ea217240cb8b2bf4b85 /* ofxCvGrayscaleImage.cpp in Sources */,
+				6F0B04A51894B0AE00418B49 /* MainMenuViewController.m in Sources */,
 				250a95ba26587be85db0a353e6e1dea2 /* ofxCvColorImage.cpp in Sources */,
 				6F0B03DF1893617900418B49 /* shooter.cpp in Sources */,
 				169d3c72fde6c5590a1616f500a456b4 /* ofxCvFloatImage.cpp in Sources */,

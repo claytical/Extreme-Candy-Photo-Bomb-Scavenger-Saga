@@ -25,6 +25,7 @@ public:
     ofColor color;
     ofPoint position;
     ofImage candyImages[3];
+    ofImage staff;
     int bullet_width;
     float bulletBeingShot;
     vector<Bullet> bullets;

@@ -36,12 +36,14 @@ class testApp : public ofxiPhoneApp{
         void deviceOrientationChanged(int newOrientation);
     
         void grabImage();
+        void randomLevel();
         bool hitTest(Candy candy, Bullet bullet);
         static bool matched(Candy &candy);
         static bool done(Bullet &bullet);
     
     
         void findMatchingColors(Candy &c);
+        bool tooManyCandies();
     
         ofVideoGrabber vidGrabber;
         ofxOpenALSoundPlayer wand;
@@ -54,6 +56,7 @@ class testApp : public ofxiPhoneApp{
         float endTime;
         int candiesCollected;
         int score;
+        int gameState;
         bool bLearnPhoto;
         bool createGrid;
         bool playing;
