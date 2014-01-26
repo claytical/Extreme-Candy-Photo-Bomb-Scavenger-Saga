@@ -38,6 +38,7 @@ class testApp : public ofxiPhoneApp{
     
         void grabImage();
         void randomLevel();
+        int highscore();
         bool hitTest(Candy candy, Bullet bullet);
     
         static bool matched(Candy &candy);
@@ -51,29 +52,38 @@ class testApp : public ofxiPhoneApp{
         bool tooManyCandies();
         bool zappedAllCandies();
     
+    
         void play();
         vector<int> getAmmo();
     
+        NSUserDefaults *player;
+
         ofVideoGrabber vidGrabber;
         ofxOpenALSoundPlayer wand;
         ofxOpenALSoundPlayer firingWand;
         ofxOpenALSoundPlayer cauldron;
         ofxOpenALSoundPlayer candySounds[7];
+        ofxOpenALSoundPlayer startSound;
+        ofxOpenALSoundPlayer randomTaunt[5];
         ofxCvColorImage	colorImg;
         ofTrueTypeFont messageText;
+        ofTrueTypeFont scoreText;
         Shooter shooter;
     
         float capW;
         float capH;
         float startTime;
         float endTime;
+        float nextTaunt;
         int candiesCollected;
         int score;
         int gameState;
         bool bLearnPhoto;
         bool createGrid;
         bool playing;
+        ofImage highscoreImage;
         ofImage candyImages[3][7];
+        ofImage gameOverImage;
         ofImage cauldronMask;
         vector <Candy> candies;
         vector<ScorePop> scorePops;

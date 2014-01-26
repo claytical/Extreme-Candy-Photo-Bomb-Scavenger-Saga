@@ -31,6 +31,8 @@ MainMenuViewController *mainMenuViewController;
 //--------------------------------------------------------------
 void testApp::setup(){	
 	//ofxiPhoneSetOrientation(OFXIPHONE_ORIENTATION_LANDSCAPE_RIGHT);
+    player = [NSUserDefaults standardUserDefaults];
+
     for (int i = 0; i < 7 ; i++) {
         candyImages[RED_TYPE][i].loadImage("red1.png");
         candyImages[GREEN_TYPE][i].loadImage("green2.png");
@@ -38,11 +40,17 @@ void testApp::setup(){
         candySounds[i].loadSound("crunch"+ofToString(i)+".caf");
         
     }
+    for (int i = 0; i < 5 ; i++) {
+        randomTaunt[i].loadSound("taunt"+ofToString(i)+".caf");
+    }
+        gameOverImage.loadImage("gameover_candies.png");
         firingWand.loadSound("shoot.caf");
+        startSound.loadSound("start.caf");
         cauldron.loadSound("bubble.caf");
         cauldron.setLoop(true);
-        cauldronMask.loadImage("caldron_masked.png");
-        messageText.loadFont("sbn.ttf", 12);
+        cauldronMask.loadImage("caldron_text_masked.png");
+        scoreText.loadFont("perp.ttf", 15);
+        messageText.loadFont("sbn.ttf", 30);
         capW = ofGetWidth();
         capH = ofGetHeight();
 		vidGrabber.initGrabber(capW, capH);
@@ -53,7 +61,7 @@ void testApp::setup(){
         createGrid = true;
         playing = false;
         ofSetFrameRate(20);
-        ofBackground(0, 0, 0);
+        ofBackground(255,255,255);
         score = 0;
         candiesCollected = 0;
         ofEnableAlphaBlending();
@@ -68,6 +76,7 @@ void testApp::play() {
 }
 //--------------------------------------------------------------
 void testApp::update(){
+
     switch (gameState) {
         case MAIN_MENU_STATE:
             break;
@@ -92,11 +101,16 @@ void testApp::update(){
             randomLevel();
             startTime = ofGetElapsedTimef();
             endTime = startTime + GAME_LENGTH;
+            nextTaunt = startTime + ofRandom(5,10);
             gameState = PLAYING_GAME_STATE;
             cauldron.stop();
             break;
         case PLAYING_GAME_STATE:
-            
+            if (ofGetElapsedTimef() > nextTaunt) {
+                int randomInt = ofRandom(0,5);
+                randomTaunt[randomInt].play();
+                nextTaunt = nextTaunt + ofRandom(5,10);
+            }
                 if (shooter.bulletBeingShot) {
                     for (int i = 0; i < candies.size(); i++) {
                         if (hitTest(candies[i], shooter.bullets[0])) {
@@ -136,7 +150,6 @@ void testApp::update(){
                         scorePops.push_back(tmpPop);
                         score = score + additionalPoints;
                         candiesCollected = 0;
-                        
                     }
                 }
             for (int i = 0; i < candies.size(); i++) {
@@ -164,14 +177,33 @@ void testApp::update(){
                 score += timeBonus;
                 gameState = GAME_OVER_STATE;
             }
-
-            
+            if (gameState == GAME_OVER_STATE) {
+                if (score == highscore()) {
+                    NSLog(@"New High Score");
+                }
+                else {
+                    NSLog(@"Failed to achieve high score");
+                }
+            }
+    
             break;
         case GAME_OVER_STATE:
             break;
             
         default:
             break;
+    }
+}
+int testApp::highscore() {
+    if (score > [[player valueForKey:@"highest_score"] intValue]) {
+        NSLog(@"New High Score!");
+        [player setValue:[NSString stringWithFormat:@"%i", score ] forKey:@"highest_score"];
+        [player synchronize];
+
+        return score;
+    }
+    else {
+        return [[player valueForKey:@"highest_score"] intValue];
     }
 }
 
@@ -310,15 +342,16 @@ void testApp::draw(){
                 candies[i].display();
             }
             for (int i = 0; i < scorePops.size(); i++) {
-                ofSetColor(255, 255, 255);
-                cout << "drawing score pop at " << scorePops[i].position.x << ", " << scorePops[i].position.y << endl;
-                messageText.drawString(scorePops[i].text, scorePops[i].position.x, scorePops[i].position.y);
+                ofSetColor(0, 0, 0);
+                scoreText.drawString(scorePops[i].text, scorePops[i].position.x, scorePops[i].position.y);
             }
             shooter.display();
             break;
         case GAME_OVER_STATE:
-            cout << "GAME OVER" << endl;
-            cout << "SCORE: " << score << endl;
+            ofSetColor(255, 255, 255);
+            gameOverImage.draw(0, ofGetHeight()/4, 320, 162);
+            ofSetColor(0, 0, 0);
+            messageText.drawString(ofToString(score), ofGetWidth()/2-20, ofGetHeight()-100);
             break;
     }
     
@@ -482,11 +515,13 @@ void testApp::touchUp(ofTouchEventArgs & touch){
             break;
         case TAKE_PICTURE_STATE:
             cout << "moving from taking picture state" << endl;
+            startSound.play();
             gameState = LOADING_GAME_STATE;
             break;
         case LOADING_GAME_STATE:
             cout << "moving from loading game state" << endl;
             gameState = PLAYING_GAME_STATE;
+            
             break;
         case PLAYING_GAME_STATE:
             if (!shooter.bulletBeingShot) {
