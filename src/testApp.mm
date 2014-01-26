@@ -72,6 +72,8 @@ void testApp::setup(){
         cauldronMask.loadImage("caldron_text_masked.png");
         scoreText.loadFont("perp.ttf", 15);
         scoreTextBig.loadFont("perp.ttf", 30);
+        scoreTextBig.setLetterSpacing(1.1);
+        messageText.setLetterSpacing(1.3);
         messageText.loadFont("sbn.ttf", 30);
         capW = ofGetWidth();
         capH = ofGetHeight();
@@ -136,7 +138,7 @@ void testApp::update(){
                 randomTaunt[randomInt].play();
                 nextTaunt = nextTaunt + ofRandom(5,10);
             }
-            if (ofGetElapsedTimef() > endTime - HURRY_UP_QUEUE && !hurryUpPlayed) {
+            if (ofGetElapsedTimef() >= endTime - HURRY_UP_QUEUE && !hurryUpPlayed) {
                 //play hurry up
                 hurrySound.play();
                 hurryUpPlayed = true;
@@ -401,18 +403,18 @@ void testApp::draw(){
             }
             if (score > 1) {
                 //1 star
-                starImage.draw(ofGetWidth()/2 - 30, ofGetHeight()-70, 60, 60);
+                starImage.draw(ofGetWidth()/2 - 30, ofGetHeight()-80, 60, 60);
             }
             if (score <= 7000 && score > 1000) {
                 //2 stars
-                starImage.draw(ofGetWidth()/2 - 60, ofGetHeight()-70, 60, 60);
-                starImage.draw(ofGetWidth()/2 - 60 + 90, ofGetHeight()-70, 60, 60);
+                starImage.draw(ofGetWidth()/2 - 90, ofGetHeight()-80, 60, 60);
+                starImage.draw(ofGetWidth()/2 - 60 + 90, ofGetHeight()-80, 60, 60);
 
             }
             if (score > 7000) {
-                starImage.draw(ofGetWidth()/2 - 90, ofGetHeight()-70, 60, 60);
-                starImage.draw(ofGetWidth()/2 - 90 + 90, ofGetHeight()-70, 60, 60);
-                starImage.draw(ofGetWidth()/2 - 90 + 180, ofGetHeight()-70, 60, 60);
+                starImage.draw(ofGetWidth()/2 - 90, ofGetHeight()-80, 60, 60);
+                starImage.draw(ofGetWidth()/2 - 90 + 90, ofGetHeight()-80, 60, 60);
+                starImage.draw(ofGetWidth()/2 - 90 + 180, ofGetHeight()-80, 60, 60);
                 
             }
             ofSetColor(0, 0, 0);

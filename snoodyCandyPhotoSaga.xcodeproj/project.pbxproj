@@ -229,10 +229,6 @@
 		6F0B05251895938A00418B49 /* caldron_text_masked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = caldron_text_masked.png; path = bin/data/caldron_text_masked.png; sourceTree = "<group>"; };
 		6F0B0527189594AD00418B49 /* gameover_candies.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = gameover_candies.png; path = bin/data/gameover_candies.png; sourceTree = "<group>"; };
 		6F0B0529189597C900418B49 /* perp.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = perp.ttf; path = bin/data/perp.ttf; sourceTree = "<group>"; };
-		6F0B052B189598DB00418B49 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		6F0B052C1895992300418B49 /* Default~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default~iphone.png"; sourceTree = "<group>"; };
-		6F0B052D1895995900418B49 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		6F0B052E189599A200418B49 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		6F0B052F18959A8700418B49 /* intro.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = intro.caf; path = bin/data/intro.caf; sourceTree = "<group>"; };
 		6F0B05321895A04300418B49 /* ofxCenteredTrueTypeFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCenteredTrueTypeFont.h; sourceTree = "<group>"; };
 		6F0B05351895A6E400418B49 /* hourglass_masked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hourglass_masked.png; path = bin/data/hourglass_masked.png; sourceTree = "<group>"; };
@@ -250,6 +246,9 @@
 		6F0B05B21895BA3200418B49 /* credit_screen_credits 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "credit_screen_credits 2.png"; sourceTree = "<group>"; };
 		6F0B05B41895BC4500418B49 /* stars_high_score.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = stars_high_score.png; path = bin/data/stars_high_score.png; sourceTree = "<group>"; };
 		6F0B05B61895BF6E00418B49 /* stars_gold_star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = stars_gold_star.png; path = bin/data/stars_gold_star.png; sourceTree = "<group>"; };
+		6F0B05BA1895C81E00418B49 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		6F0B05BB1895C83200418B49 /* Default~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default~iphone.png"; sourceTree = "<group>"; };
+		6F0B05BC1895C84E00418B49 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		6b907cfbb1b0fede76c41aa0c64ddaf7 /* heap.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = heap.h; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/flann/heap.h; sourceTree = SOURCE_ROOT; };
 		6dd5a3cbb6d5bba1c1354f1b16430892 /* flann.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = flann.hpp; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/flann/flann.hpp; sourceTree = SOURCE_ROOT; };
 		7101cf2125b8b2bf46aa2662e7f42ef2 /* cxcore.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = cxcore.hpp; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv/cxcore.hpp; sourceTree = SOURCE_ROOT; };
@@ -465,13 +464,12 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				6F0B05BC1895C84E00418B49 /* Default-568h@2x.png */,
+				6F0B05BB1895C83200418B49 /* Default~iphone.png */,
+				6F0B05BA1895C81E00418B49 /* Default.png */,
 				6F0B05AC1895B97F00418B49 /* CreditsViewController.h */,
 				6F0B05AD1895B97F00418B49 /* CreditsViewController.m */,
 				6F0B05AE1895B97F00418B49 /* CreditsViewController.xib */,
-				6F0B052E189599A200418B49 /* Default-568h@2x.png */,
-				6F0B052D1895995900418B49 /* Default-568h@2x.png */,
-				6F0B052C1895992300418B49 /* Default~iphone.png */,
-				6F0B052B189598DB00418B49 /* Default.png */,
 				6F0B04B91895599A00418B49 /* sounds */,
 				6F0B04B3189550C400418B49 /* fonts */,
 				6F0B04A21894B0AE00418B49 /* MainMenuViewController.h */,
