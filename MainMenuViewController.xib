@@ -19,10 +19,10 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="7TN-ob-Stb">
-                    <rect key="frame" x="-724" y="-554" width="1768" height="1513"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="7TN-ob-Stb">
+                    <rect key="frame" x="45" y="61" width="231" height="183"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="Play">
+                    <state key="normal" image="gameTitle_embed.png">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                     <connections>
@@ -36,5 +36,6 @@
     </objects>
     <resources>
         <image name="candy_main_menu.png" width="320" height="480"/>
+        <image name="gameTitle_embed.png" width="196" height="183"/>
     </resources>
 </document>

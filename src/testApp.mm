@@ -31,15 +31,17 @@ MainMenuViewController *mainMenuViewController;
 //--------------------------------------------------------------
 void testApp::setup(){	
 	//ofxiPhoneSetOrientation(OFXIPHONE_ORIENTATION_LANDSCAPE_RIGHT);
-        candyImages[RED_TYPE].loadImage("red.png");
-        candyImages[GREEN_TYPE].loadImage("green.png");
-        candyImages[BLUE_TYPE].loadImage("blue.png");
-        candySounds[RED_TYPE].loadSound("crunch1.caf");
-        candySounds[GREEN_TYPE].loadSound("crunch2.caf");
-        candySounds[BLUE_TYPE].loadSound("crunch3.caf");
+    for (int i = 0; i < 7 ; i++) {
+        candyImages[RED_TYPE][i].loadImage("red1.png");
+        candyImages[GREEN_TYPE][i].loadImage("green2.png");
+        candyImages[BLUE_TYPE][i].loadImage("blue3.png");
+        candySounds[i].loadSound("crunch"+ofToString(i)+".caf");
+        
+    }
         firingWand.loadSound("shoot.caf");
         cauldron.loadSound("bubble.caf");
         cauldron.setLoop(true);
+        cauldronMask.loadImage("caldron_masked.png");
         messageText.loadFont("sbn.ttf", 12);
         capW = ofGetWidth();
         capH = ofGetHeight();
@@ -79,8 +81,14 @@ void testApp::update(){
             
             break;
         case LOADING_GAME_STATE:
+            /*
+            for (int i = 0; i < 7 ; i++) {
+                candyImages[RED_TYPE][i].loadImage("red"+ofToString(int(ofRandom(7)))+".png");
+                candyImages[GREEN_TYPE][i].loadImage("green"+ofToString(int(ofRandom(7)))+".png");
+                candyImages[BLUE_TYPE][i].loadImage("blue"+ofToString(int(ofRandom(7)))+".png");
+            }
+             */
             shooter.create(ofGetWidth()/2, ofGetHeight() - (TOP_PADDING*4), GRID_SQUARE_SIZE, getAmmo());
-//            shooter.create(ofGetWidth()/2, ofGetHeight() - (TOP_PADDING*4), GRID_SQUARE_SIZE, GRID_SQUARE_SIZE);
             randomLevel();
             startTime = ofGetElapsedTimef();
             endTime = startTime + GAME_LENGTH;
@@ -97,8 +105,8 @@ void testApp::update(){
                             shooter.bullets[0].beingShot = false;
                             shooter.bullets[0].transform = true;
                             Candy tmpCandy;
-                            
-                            tmpCandy.create(shooter.bullets[0].position.x, candies[i].position.y + GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, shooter.bullets[0].type, &candyImages[shooter.bullets[0].type]);
+                            int randomInt = ofRandom(0,7);
+                            tmpCandy.create(shooter.bullets[0].position.x, candies[i].position.y + GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, shooter.bullets[0].type, randomInt, &candyImages[shooter.bullets[0].type][randomInt]);
                             
                             candies.push_back(tmpCandy);
                             findMatchingColors(candies[candies.size()-1]);
@@ -110,8 +118,9 @@ void testApp::update(){
                     
                     if (shooter.bullets[0].position.y <= TOP_PADDING) {
                         Candy tmpCandy;
+                        int randomInt = ofRandom(0,7);
                         
-                        tmpCandy.create(shooter.bullets[0].position.x, TOP_PADDING, GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, shooter.bullets[0].type, &candyImages[shooter.bullets[0].type]);
+                        tmpCandy.create(shooter.bullets[0].position.x, TOP_PADDING, GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, shooter.bullets[0].type, randomInt, &candyImages[shooter.bullets[0].type][randomInt]);
                         
                         
                         candies.push_back(tmpCandy);
@@ -130,15 +139,19 @@ void testApp::update(){
                         
                     }
                 }
+            for (int i = 0; i < candies.size(); i++) {
+                checkHangers(candies[i]);
                 
+            }
                 //remove the bullet
                 ofRemove(shooter.bullets, done);
                 //remove any matched candies
                 ofRemove(candies, matched);
                 //remove score pop messages
                 ofRemove(scorePops, popped);
+                ofRemove(candies, hanging);
             
-                if (ofGetElapsedTimef() > endTime) {
+            if (ofGetElapsedTimef() > endTime) {
                     gameState = GAME_OVER_STATE;
                 }
 
@@ -180,6 +193,10 @@ bool testApp::popped(ScorePop &scorepop) {
     }
 }
 
+bool testApp::hanging(Candy &candy) {
+    return candy.hanging;
+}
+
 bool testApp::tooManyCandies() {
     for (int i = 0; i < candies.size(); i++) {
         if (candies[i].position.y >= 360) {
@@ -196,6 +213,36 @@ bool testApp::zappedAllCandies() {
     return false;
 }
 
+void testApp::checkHangers(Candy &c) {
+    float upNeighborX = c.position.x;
+    float upNeighborY = c.position.y - GRID_SQUARE_SIZE;
+    float downNeighborX = c.position.x;
+    float downNeighborY = c.position.y + GRID_SQUARE_SIZE;
+    float leftNeighborX = c.position.x - GRID_SQUARE_SIZE;
+    float leftNeighborY = c.position.y;
+    float rightNeighborX = c.position.x + GRID_SQUARE_SIZE;
+    float rightNeighborY = c.position.y;
+    c.hanging = true;
+    for (int i = 0; i < candies.size(); i++) {
+            //UP
+            if (candies[i].position.x == upNeighborX && candies[i].position.y == upNeighborY) {
+                c.hanging = false;
+            }
+            //DOWN
+            if (candies[i].position.x == downNeighborX && candies[i].position.y == downNeighborY) {
+                c.hanging = false;
+            }
+            //LEFT
+            if (candies[i].position.x == leftNeighborX && candies[i].position.y == leftNeighborY) {
+                c.hanging = false;
+            }
+            //RIGHT
+            if (candies[i].position.x == rightNeighborX && candies[i].position.y == rightNeighborY) {
+                c.hanging = false;
+            }
+        
+    }
+}
 
 void testApp::findMatchingColors(Candy &c) {
     float upNeighborX = c.position.x;
@@ -236,7 +283,7 @@ void testApp::findMatchingColors(Candy &c) {
             if (candies[i].matched) {
                 candiesCollected++;
                 c.matched = true;
-                candySounds[candies[i].type].play();
+                candySounds[candies[i].subtype].play();
                 findMatchingColors(candies[i]);
             }
         }
@@ -254,6 +301,7 @@ void testApp::draw(){
         case TAKE_PICTURE_STATE:
             ofSetColor(255, 255, 255);
             colorImg.draw(0, 0);
+            cauldronMask.draw(0, 0, ofGetWidth(), ofGetHeight());
             break;
         case LOADING_GAME_STATE:
             break;
@@ -335,7 +383,9 @@ void testApp::grabImage() {
                     selectedColor = BLUE_TYPE;
                     
                 }
-                tmpCandy.create(x, y,GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, selectedColor, &candyImages[selectedColor]);
+                int randomInt = ofRandom(0,7);
+
+                tmpCandy.create(x, y,GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, selectedColor, randomInt, &candyImages[selectedColor][randomInt]);
 
                 /* CREATE CANDY */
                 candies.push_back(tmpCandy);
@@ -357,9 +407,10 @@ void testApp::randomLevel() {
         for (int y = TOP_PADDING; y < ofGetHeight()/2 + TOP_PADDING; y+= GRID_SQUARE_SIZE) {
             Candy tmpCandy;
             int colorSelect = ofRandom(0,3);
-            
+            int randomInt = ofRandom(0,7);
+
             /* CREATE CANDY */
-            tmpCandy.create(x, y,GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, colorSelect, &candyImages[colorSelect]);
+            tmpCandy.create(x, y,GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, colorSelect, randomInt, &candyImages[colorSelect][randomInt]);
             
             candies.push_back(tmpCandy);
         }

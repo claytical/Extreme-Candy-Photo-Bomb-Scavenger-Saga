@@ -18,9 +18,10 @@ void Candy::display() {
    // ofRect(position.x, position.y, width, height);
 }
 
-void Candy::create(float x, float y, int w, int h, int t, ofImage * img) {
+void Candy::create(float x, float y, int w, int h, int t, int st, ofImage * img) {
     image = img;
     type = t;
+    subtype = st;
     position.set(x, y);
     width = w;
     height = h;

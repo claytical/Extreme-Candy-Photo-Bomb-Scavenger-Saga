@@ -39,12 +39,15 @@ class testApp : public ofxiPhoneApp{
         void grabImage();
         void randomLevel();
         bool hitTest(Candy candy, Bullet bullet);
+    
         static bool matched(Candy &candy);
         static bool done(Bullet &bullet);
         static bool popped(ScorePop &scorepop);
+        static bool hanging(Candy &c);
     
-    
+        void checkHangers(Candy &c);
         void findMatchingColors(Candy &c);
+        //bool removeHangers(Candy &c);
         bool tooManyCandies();
         bool zappedAllCandies();
     
@@ -55,7 +58,7 @@ class testApp : public ofxiPhoneApp{
         ofxOpenALSoundPlayer wand;
         ofxOpenALSoundPlayer firingWand;
         ofxOpenALSoundPlayer cauldron;
-        ofxOpenALSoundPlayer candySounds[3];
+        ofxOpenALSoundPlayer candySounds[7];
         ofxCvColorImage	colorImg;
         ofTrueTypeFont messageText;
         Shooter shooter;
@@ -70,9 +73,8 @@ class testApp : public ofxiPhoneApp{
         bool bLearnPhoto;
         bool createGrid;
         bool playing;
-        ofImage candyImages[3];
-        //ofImage redCandy, greenCandy, blueCandy;
-
+        ofImage candyImages[3][7];
+        ofImage cauldronMask;
         vector <Candy> candies;
         vector<ScorePop> scorePops;
 };
