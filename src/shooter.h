@@ -8,6 +8,9 @@
 
 #include "ofMain.h"
 #include "bullet.h"
+#define RED_TYPE    0
+#define GREEN_TYPE  1
+#define BLUE_TYPE   2
 
 class Shooter {
     
@@ -21,6 +24,7 @@ public:
     
     ofColor color;
     ofPoint position;
+    ofImage candyImages[3];
     int bullet_width;
     float bulletBeingShot;
     vector<Bullet> bullets;

@@ -21,6 +21,8 @@ void testApp::setup(){
         candyImages[RED_TYPE].loadImage("red.png");
         candyImages[GREEN_TYPE].loadImage("green.png");
         candyImages[BLUE_TYPE].loadImage("blue.png");
+    shooter.create(ofGetWidth()/2, ofGetHeight() - (TOP_PADDING*4), GRID_SQUARE_SIZE, GRID_SQUARE_SIZE);
+
         capW = ofGetWidth();
         capH = ofGetHeight();
 		vidGrabber.initGrabber(capW, capH);
@@ -47,7 +49,6 @@ void testApp::setup(){
                 candies.push_back(tmpCandy);
             }
         }
-    shooter.create(ofGetWidth()/2, ofGetHeight() - (TOP_PADDING*4), GRID_SQUARE_SIZE, GRID_SQUARE_SIZE);
 
 }
 

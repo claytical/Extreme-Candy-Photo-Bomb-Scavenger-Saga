@@ -56,6 +56,10 @@ void Shooter::create(float x, float y, int w, int h) {
     bulletBeingShot = false;
     position.set(x, y);
     bullet_width = w;
+    candyImages[RED_TYPE].loadImage("red.png");
+    candyImages[GREEN_TYPE].loadImage("green.png");
+    candyImages[BLUE_TYPE].loadImage("blue.png");
+
     //make specific spots for the shot to come from
     for (int x = 0; x < ofGetWidth(); x+=bullet_width) {
         crates.push_back(ofPoint(x, y));
@@ -67,24 +71,9 @@ void Shooter::create(float x, float y, int w, int h) {
     for (int i = 0; i < 2; i++) {
         Bullet tmpBullet;
         int colorSelect = ofRandom(0,3);
-        ofColor tmpColor;
+//        ofColor tmpColor;
         /* ASSIGN COLOR */
-        switch (colorSelect) {
-            case 0:
-                tmpColor = RED;
-                break;
-            case 1:
-                tmpColor = GREEN;
-                break;
-            case 2:
-                tmpColor = BLUE;
-                break;
-            default:
-                tmpColor = ofColor(255,255,0);
-                break;
-        }
-
-        tmpBullet.create(bullet_width, bullet_width);
+        tmpBullet.create(bullet_width, bullet_width, colorSelect, &candyImages[colorSelect]);
         bullets.push_back(tmpBullet);
     }
 }
@@ -104,7 +93,8 @@ void Shooter::move(float x, float y) {
 
 void Shooter::reload() {
         Bullet tmpBullet;
-        tmpBullet.create(bullet_width, bullet_width);
+        int colorSelect = ofRandom(0,3);
+        tmpBullet.create(bullet_width, bullet_width, colorSelect, &candyImages[colorSelect]);
         bullets.push_back(tmpBullet);
     
 }
