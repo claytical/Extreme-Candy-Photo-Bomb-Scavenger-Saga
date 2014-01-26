@@ -13,10 +13,13 @@
 void Candy::display() {
     ofFill();
     ofSetColor(color);
+   // ofSetColor(255, 255, 255);
+   // image.draw(position, width, height);
     ofRect(position.x, position.y, width, height);
 }
 
-void Candy::create(float x, float y, int w, int h, ofColor c) {
+void Candy::create(float x, float y, int w, int h, ofColor c, ofImage img) {
+    image = img;
     position.set(x, y);
     color = c;
     width = w;

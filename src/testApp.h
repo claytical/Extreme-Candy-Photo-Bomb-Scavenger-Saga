@@ -4,6 +4,8 @@
 #include "ofMain.h"
 #include "ofxiPhone.h"
 #include "ofxiPhoneExtras.h"
+#include "ofxOpenALSoundPlayer.h"
+
 #include "candy.h"
 #include "shooter.h"
 
@@ -42,14 +44,21 @@ class testApp : public ofxiPhoneApp{
         void findMatchingColors(Candy &c);
     
         ofVideoGrabber vidGrabber;
+        ofxOpenALSoundPlayer wand;
         ofxCvColorImage	colorImg;
         Shooter shooter;
     
         float capW;
         float capH;
-		int threshold;
-		bool bLearnPhoto;
+        float startTime;
+        float endTime;
+        int candiesCollected;
+        int score;
+        bool bLearnPhoto;
         bool createGrid;
+        bool playing;
+        ofImage redCandy, greenCandy, blueCandy;
+
         vector <Candy> candies;
     
 };

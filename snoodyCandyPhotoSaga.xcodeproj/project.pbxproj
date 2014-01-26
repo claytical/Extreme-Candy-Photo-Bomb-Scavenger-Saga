@@ -20,6 +20,9 @@
 		6F0B03DF1893617900418B49 /* shooter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B03DD1893617900418B49 /* shooter.cpp */; };
 		6F0B03E21893620300418B49 /* bullet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B03E01893620300418B49 /* bullet.cpp */; };
 		6F0B04961894079300418B49 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F0B04951894079300418B49 /* GameKit.framework */; };
+		6F0B049C1894953A00418B49 /* blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F0B04991894953A00418B49 /* blue.png */; };
+		6F0B049D1894953A00418B49 /* green.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F0B049A1894953A00418B49 /* green.png */; };
+		6F0B049E1894953A00418B49 /* red.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F0B049B1894953A00418B49 /* red.png */; };
 		BB16EBD20F2B2A9500518274 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB16EBD10F2B2A9500518274 /* OpenGLES.framework */; };
 		BB16EBD90F2B2AB500518274 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB16EBD80F2B2AB500518274 /* QuartzCore.framework */; };
 		BB24DDCA10DA781C00E9C588 /* ofxiphone-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB24DDC910DA781C00E9C588 /* ofxiphone-Info.plist */; };
@@ -100,6 +103,9 @@
 		6F0B03E01893620300418B49 /* bullet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bullet.cpp; sourceTree = "<group>"; };
 		6F0B03E11893620300418B49 /* bullet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bullet.h; sourceTree = "<group>"; };
 		6F0B04951894079300418B49 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		6F0B04991894953A00418B49 /* blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = blue.png; path = bin/data/blue.png; sourceTree = "<group>"; };
+		6F0B049A1894953A00418B49 /* green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = green.png; path = bin/data/green.png; sourceTree = "<group>"; };
+		6F0B049B1894953A00418B49 /* red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = red.png; path = bin/data/red.png; sourceTree = "<group>"; };
 		6b907cfbb1b0fede76c41aa0c64ddaf7 /* heap.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = heap.h; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/flann/heap.h; sourceTree = SOURCE_ROOT; };
 		6dd5a3cbb6d5bba1c1354f1b16430892 /* flann.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = flann.hpp; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/flann/flann.hpp; sourceTree = SOURCE_ROOT; };
 		7101cf2125b8b2bf46aa2662e7f42ef2 /* cxcore.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = cxcore.hpp; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv/cxcore.hpp; sourceTree = SOURCE_ROOT; };
@@ -315,6 +321,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				6F0B04981894952C00418B49 /* images */,
 				6F0B04951894079300418B49 /* GameKit.framework */,
 				E4D8936A11527B74007E1F53 /* src */,
 				BB24E1F710DAA51900E9C588 /* openFrameworks */,
@@ -373,6 +380,16 @@
 				f886eba3f8f05c7f74633933903283e7 /* devmem2d.hpp */,
 			);
 			name = gpu;
+			sourceTree = "<group>";
+		};
+		6F0B04981894952C00418B49 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				6F0B04991894953A00418B49 /* blue.png */,
+				6F0B049A1894953A00418B49 /* green.png */,
+				6F0B049B1894953A00418B49 /* red.png */,
+			);
+			name = images;
 			sourceTree = "<group>";
 		};
 		737b033aa777b67ba4f8f4d270c1439f /* opencv */ = {
@@ -655,7 +672,10 @@
 			files = (
 				BB24DDCA10DA781C00E9C588 /* ofxiphone-Info.plist in Resources */,
 				E41D3ED713B38FB500A75A5D /* Project.xcconfig in Resources */,
+				6F0B049D1894953A00418B49 /* green.png in Resources */,
+				6F0B049E1894953A00418B49 /* red.png in Resources */,
 				E41D3EE613B3906D00A75A5D /* CoreOF.xcconfig in Resources */,
+				6F0B049C1894953A00418B49 /* blue.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

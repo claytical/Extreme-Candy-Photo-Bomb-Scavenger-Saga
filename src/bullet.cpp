@@ -17,7 +17,7 @@ void Bullet::display() {
 }
 
 void Bullet::create(int w, int h, ofColor c) {
-    speed = 3;
+    speed = 20;
     transform = false;
     destroy = false;
     color = c;

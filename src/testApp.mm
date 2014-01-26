@@ -2,8 +2,14 @@
 #define GRID_HEIGHT         5
 #define GRID_SQUARE_SIZE    40
 #define TOP_PADDING         20
+#define STARTING_TIME       10
+#define GAME_LENGTH         30
 
 #include "testApp.h"
+
+#define RED     ofColor(255,0,0)
+#define GREEN   ofColor(0,255,0)
+#define BLUE    ofColor(0,0,255)
 
 
 //--------------------------------------------------------------
@@ -17,32 +23,43 @@ void testApp::setup(){
         colorImg.allocate(capW,capH);
         bLearnPhoto = true;
         createGrid = true;
-        threshold = 80;
+        playing = false;
         ofSetFrameRate(20);
         ofBackground(0, 0, 0);
+        score = 0;
+        candiesCollected = 0;
+        redCandy.loadImage("red.png");
+        greenCandy.loadImage("green.png");
+        blueCandy.loadImage("blue.png");
+        ofEnableAlphaBlending();
     //CREATE GRID
         for (int x = 0; x < ofGetWidth(); x+= GRID_SQUARE_SIZE) {
             for (int y = TOP_PADDING; y < ofGetHeight()/2 + TOP_PADDING; y+= GRID_SQUARE_SIZE) {
                 Candy tmpCandy;
                 int colorSelect = ofRandom(0,3);
                 ofColor tmpColor;
+                ofImage tmpImage;
                 /* ASSIGN COLOR */
                 switch (colorSelect) {
                     case 0:
                          tmpColor = ofColor(255,0,0);
+                        tmpImage = redCandy;
                         break;
                     case 1:
                         tmpColor = ofColor(0,255,0);
+                        tmpImage = greenCandy;
                         break;
                     case 2:
                         tmpColor = ofColor(0,0,255);
+                        tmpImage = blueCandy;
                         break;
                     default:
                         tmpColor = ofColor(0,0,0);
+                        tmpImage = redCandy;
                         break;
                 }
                 /* CREATE CANDY */
-                tmpCandy.create(x, y,GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, tmpColor);
+                tmpCandy.create(x, y,GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, tmpColor, tmpImage);
                 candies.push_back(tmpCandy);
             }
         }
@@ -52,6 +69,7 @@ void testApp::setup(){
 
 //--------------------------------------------------------------
 void testApp::update(){
+    if (playing) {
     if (shooter.bulletBeingShot) {
         for (int i = 0; i < candies.size(); i++) {
             if (hitTest(candies[i], shooter.bullets[0])) {
@@ -60,8 +78,22 @@ void testApp::update(){
                 shooter.bullets[0].beingShot = false;
                 shooter.bullets[0].transform = true;
                 Candy tmpCandy;
-                tmpCandy.create(shooter.bullets[0].position.x, candies[i].position.y + GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, shooter.bullets[0].color);
-                
+/*
+                if (tmpCandy.color == RED) {
+                    tmpCandy.create(shooter.bullets[0].position.x, candies[i].position.y + GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, shooter.bullets[0].color, redCandy);
+                    
+                }
+                if (tmpCandy.color == GREEN) {
+                    tmpCandy.create(shooter.bullets[0].position.x, candies[i].position.y + GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, shooter.bullets[0].color, greenCandy);
+                    
+                }
+                if (tmpCandy.color == BLUE) {
+                    tmpCandy.create(shooter.bullets[0].position.x, candies[i].position.y + GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, shooter.bullets[0].color, blueCandy);
+                    
+                }
+  */
+                tmpCandy.create(shooter.bullets[0].position.x, candies[i].position.y + GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, shooter.bullets[0].color, candies[i].image);
+
                 candies.push_back(tmpCandy);
                 findMatchingColors(candies[candies.size()-1]);
                 shooter.bulletBeingShot = false;
@@ -71,7 +103,23 @@ void testApp::update(){
         }
         if (shooter.bullets[0].position.y <= TOP_PADDING) {
             Candy tmpCandy;
-            tmpCandy.create(shooter.bullets[0].position.x, TOP_PADDING, GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, shooter.bullets[0].color);
+            
+            if (tmpCandy.color == RED) {
+                tmpCandy.create(shooter.bullets[0].position.x, TOP_PADDING, GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, shooter.bullets[0].color, redCandy);
+                
+            }
+            if (tmpCandy.color == GREEN) {
+                tmpCandy.create(shooter.bullets[0].position.x, TOP_PADDING, GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, shooter.bullets[0].color, greenCandy);
+                
+            }
+            if (tmpCandy.color == BLUE) {
+                tmpCandy.create(shooter.bullets[0].position.x, TOP_PADDING, GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, shooter.bullets[0].color, blueCandy);
+                
+            }
+             
+//            tmpCandy.create(shooter.bullets[0].position.x, TOP_PADDING, GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, shooter.bullets[0].color, candies[i].image);
+        
+
             candies.push_back(tmpCandy);
             shooter.bulletBeingShot = false;
             shooter.bullets[0].transform = true;
@@ -83,7 +131,17 @@ void testApp::update(){
     ofRemove(shooter.bullets, done);
     //remove any matched candies
     ofRemove(candies, matched);
-
+        if (ofGetElapsedTimef() > endTime) {
+            playing = false;
+            grabImage();
+            cout << "new game!" << endl;
+        }
+    }
+    else {
+        startTime = ofGetElapsedTimef();
+        endTime = startTime + GAME_LENGTH;
+        playing = true;
+    }
 }
 
 bool testApp::matched(Candy &candy) {
@@ -118,24 +176,22 @@ void testApp::findMatchingColors(Candy &c) {
             if (candies[i].position.x == downNeighborX && candies[i].position.y == downNeighborY) {
                 if (candies[i].color == c.color) {
                     candies[i].matched = true;
-                    
                 }
             }
             //LEFT
             if (candies[i].position.x == leftNeighborX && candies[i].position.y == leftNeighborY) {
                 if (candies[i].color == c.color) {
                     candies[i].matched = true;
-                    
                 }
             }
             //RIGHT
             if (candies[i].position.x == rightNeighborX && candies[i].position.y == rightNeighborY) {
                 if (candies[i].color == c.color) {
                     candies[i].matched = true;
-                    
                 }
             }
             if (candies[i].matched) {
+                candiesCollected++;
                 c.matched = true;
                 findMatchingColors(candies[i]);
             }
@@ -147,10 +203,13 @@ void testApp::findMatchingColors(Candy &c) {
 //--------------------------------------------------------------
 void testApp::draw(){	
 //    colorImg.draw(0, 0, ofGetWidth(), ofGetHeight());
+    if (playing) {
+
     for (int i = 0; i < candies.size(); i++) {
         candies[i].display();
     }
-    shooter.display();
+        shooter.display();
+    }
 }
 //--------------------------------------------------------------
 void testApp::grabImage() {
@@ -173,22 +232,25 @@ void testApp::grabImage() {
                 ofColor tmpColor;
                 
                 if (red > green && red > blue) {
-                    tmpColor = ofColor(255,0,0);
+                    tmpColor = RED;
+                    tmpCandy.create(x, y,GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, tmpColor, redCandy);
                     
                     cout << "Red Candy"<< endl;
                 }
                 else if  (green > red && green > blue) {
                     cout << "Green Candy" << endl;
-                    tmpColor = ofColor(0,255,0);
+                    tmpCandy.create(x, y,GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, tmpColor, greenCandy);
+
+                    tmpColor = GREEN;
                     
                 }
                 else if (blue > red && blue > green) {
                     cout << "Blue Candy" << endl;
-                    tmpColor = ofColor(0,0,255);
+                    tmpColor = BLUE;
+                    tmpCandy.create(x, y,GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, tmpColor, blueCandy);
                     
                 }
                 /* CREATE CANDY */
-                tmpCandy.create(x, y,GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, tmpColor);
                 candies.push_back(tmpCandy);
             }
         }
@@ -211,16 +273,21 @@ void testApp::exit(){
 //--------------------------------------------------------------
 void testApp::touchDown(ofTouchEventArgs & touch){
     shooter.move(touch.x, touch.y);
+    
 }
 
 //--------------------------------------------------------------
 void testApp::touchMoved(ofTouchEventArgs & touch){
+
     shooter.move(touch.x, touch.y);
 }
     
 //--------------------------------------------------------------
 void testApp::touchUp(ofTouchEventArgs & touch){
+
     if (!shooter.bulletBeingShot) {
+        wand.vibrate();
+
         shooter.shoot();
     }
 }
