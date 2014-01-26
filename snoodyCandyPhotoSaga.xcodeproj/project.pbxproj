@@ -86,6 +86,11 @@
 		6F0B05A71895B46D00418B49 /* remember.caf in Resources */ = {isa = PBXBuildFile; fileRef = 6F0B05A61895B46D00418B49 /* remember.caf */; };
 		6F0B05A91895B50F00418B49 /* game_quote.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F0B05A81895B50F00418B49 /* game_quote.png */; };
 		6F0B05AB1895B6FB00418B49 /* speech.caf in Resources */ = {isa = PBXBuildFile; fileRef = 6F0B05AA1895B6FB00418B49 /* speech.caf */; };
+		6F0B05AF1895B97F00418B49 /* CreditsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B05AD1895B97F00418B49 /* CreditsViewController.m */; };
+		6F0B05B01895B97F00418B49 /* CreditsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F0B05AE1895B97F00418B49 /* CreditsViewController.xib */; };
+		6F0B05B31895BA3200418B49 /* credit_screen_credits 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F0B05B21895BA3200418B49 /* credit_screen_credits 2.png */; };
+		6F0B05B51895BC4500418B49 /* stars_high_score.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F0B05B41895BC4500418B49 /* stars_high_score.png */; };
+		6F0B05B71895BF6E00418B49 /* stars_gold_star.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F0B05B61895BF6E00418B49 /* stars_gold_star.png */; };
 		BB16EBD20F2B2A9500518274 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB16EBD10F2B2A9500518274 /* OpenGLES.framework */; };
 		BB16EBD90F2B2AB500518274 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB16EBD80F2B2AB500518274 /* QuartzCore.framework */; };
 		BB24DDCA10DA781C00E9C588 /* ofxiphone-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB24DDC910DA781C00E9C588 /* ofxiphone-Info.plist */; };
@@ -239,6 +244,12 @@
 		6F0B05A61895B46D00418B49 /* remember.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = remember.caf; path = bin/data/remember.caf; sourceTree = "<group>"; };
 		6F0B05A81895B50F00418B49 /* game_quote.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = game_quote.png; path = bin/data/game_quote.png; sourceTree = "<group>"; };
 		6F0B05AA1895B6FB00418B49 /* speech.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = speech.caf; path = bin/data/speech.caf; sourceTree = "<group>"; };
+		6F0B05AC1895B97F00418B49 /* CreditsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreditsViewController.h; sourceTree = "<group>"; };
+		6F0B05AD1895B97F00418B49 /* CreditsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreditsViewController.m; sourceTree = "<group>"; };
+		6F0B05AE1895B97F00418B49 /* CreditsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreditsViewController.xib; sourceTree = "<group>"; };
+		6F0B05B21895BA3200418B49 /* credit_screen_credits 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "credit_screen_credits 2.png"; sourceTree = "<group>"; };
+		6F0B05B41895BC4500418B49 /* stars_high_score.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = stars_high_score.png; path = bin/data/stars_high_score.png; sourceTree = "<group>"; };
+		6F0B05B61895BF6E00418B49 /* stars_gold_star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = stars_gold_star.png; path = bin/data/stars_gold_star.png; sourceTree = "<group>"; };
 		6b907cfbb1b0fede76c41aa0c64ddaf7 /* heap.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = heap.h; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/flann/heap.h; sourceTree = SOURCE_ROOT; };
 		6dd5a3cbb6d5bba1c1354f1b16430892 /* flann.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = flann.hpp; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/flann/flann.hpp; sourceTree = SOURCE_ROOT; };
 		7101cf2125b8b2bf46aa2662e7f42ef2 /* cxcore.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = cxcore.hpp; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv/cxcore.hpp; sourceTree = SOURCE_ROOT; };
@@ -454,6 +465,9 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				6F0B05AC1895B97F00418B49 /* CreditsViewController.h */,
+				6F0B05AD1895B97F00418B49 /* CreditsViewController.m */,
+				6F0B05AE1895B97F00418B49 /* CreditsViewController.xib */,
 				6F0B052E189599A200418B49 /* Default-568h@2x.png */,
 				6F0B052D1895995900418B49 /* Default-568h@2x.png */,
 				6F0B052C1895992300418B49 /* Default~iphone.png */,
@@ -527,6 +541,9 @@
 		6F0B04981894952C00418B49 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				6F0B05B61895BF6E00418B49 /* stars_gold_star.png */,
+				6F0B05B41895BC4500418B49 /* stars_high_score.png */,
+				6F0B05B21895BA3200418B49 /* credit_screen_credits 2.png */,
 				6F0B05A81895B50F00418B49 /* game_quote.png */,
 				6F0B05A01895AC7700418B49 /* score_bar_longer.png */,
 				6F0B05391895AA4A00418B49 /* hourglass_white.png */,
@@ -926,6 +943,7 @@
 				6F0B05A71895B46D00418B49 /* remember.caf in Resources */,
 				6F0B050C1895753500418B49 /* Icon-Small.png in Resources */,
 				6F0B050318956C6400418B49 /* red7.png in Resources */,
+				6F0B05B71895BF6E00418B49 /* stars_gold_star.png in Resources */,
 				6F0B04D21895657200418B49 /* crunch4.caf in Resources */,
 				6F0B050F1895753500418B49 /* extremeCandy_icon-80.png in Resources */,
 				6F0B04D41895657200418B49 /* crunch6.caf in Resources */,
@@ -940,7 +958,9 @@
 				6F0B052118958B7D00418B49 /* taunt3.caf in Resources */,
 				6F0B05151895768900418B49 /* gameTitle_embed@2x.png in Resources */,
 				6F0B04F418956C6300418B49 /* blue7.png in Resources */,
+				6F0B05B01895B97F00418B49 /* CreditsViewController.xib in Resources */,
 				6F0B04C1189559A900418B49 /* crunch2.caf in Resources */,
+				6F0B05B31895BA3200418B49 /* credit_screen_credits 2.png in Resources */,
 				E41D3EE613B3906D00A75A5D /* CoreOF.xcconfig in Resources */,
 				6F0B052218958B7D00418B49 /* taunt4.caf in Resources */,
 				6F0B053018959A8700418B49 /* intro.caf in Resources */,
@@ -948,6 +968,7 @@
 				6F0B05101895753500418B49 /* Icon~iphone.png in Resources */,
 				6F0B050118956C6400418B49 /* red5.png in Resources */,
 				6F0B04D71895681800418B49 /* caldron_masked.png in Resources */,
+				6F0B05B51895BC4500418B49 /* stars_high_score.png in Resources */,
 				6F0B04C3189559A900418B49 /* shoot.caf in Resources */,
 				6F0B04EF18956C6300418B49 /* blue2.png in Resources */,
 				6F0B0513189575E000418B49 /* gameTitle_embed.png in Resources */,
@@ -988,6 +1009,7 @@
 				6F0B04A51894B0AE00418B49 /* MainMenuViewController.mm in Sources */,
 				6F0B04B81895519500418B49 /* scorepop.cpp in Sources */,
 				250a95ba26587be85db0a353e6e1dea2 /* ofxCvColorImage.cpp in Sources */,
+				6F0B05AF1895B97F00418B49 /* CreditsViewController.m in Sources */,
 				6F0B03DF1893617900418B49 /* shooter.cpp in Sources */,
 				169d3c72fde6c5590a1616f500a456b4 /* ofxCvFloatImage.cpp in Sources */,
 				d3301f6a0b43bb293ed97c1d5d26c840 /* ofxCvShortImage.cpp in Sources */,

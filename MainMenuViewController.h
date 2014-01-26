@@ -13,4 +13,5 @@
     testApp *myApp;
 }
 - (IBAction)playGame:(id)sender;
+- (IBAction)credits:(id)sender;
 @end

@@ -85,6 +85,7 @@ class testApp : public ofxiPhoneApp{
         int score;
         int gameState;
         bool bLearnPhoto;
+        bool highscoreAchieved;
         bool createGrid;
         bool playing;
         bool hurryUpPlayed;
@@ -96,6 +97,7 @@ class testApp : public ofxiPhoneApp{
         ofImage hourglassImage;
         ofImage scoreBarImage;
         ofImage themeImage;
+        ofImage starImage;
         vector <Candy> candies;
         vector<ScorePop> scorePops;
 };

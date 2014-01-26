@@ -8,6 +8,7 @@
 
 #import "MainMenuViewController.h"
 #include "ofxiPhoneExtras.h"
+#include "CreditsViewController.h"
 
 @interface MainMenuViewController ()
 
@@ -41,6 +42,11 @@
 
 - (IBAction)playGame:(id)sender {
     myApp->play();
+}
+
+- (IBAction)credits:(id)sender {
+    CreditsViewController *credits = [[CreditsViewController alloc] initWithNibName:@"CreditsViewController" bundle:nil];
+    [self presentViewController:credits animated:YES completion:nil];
 }
 
 
