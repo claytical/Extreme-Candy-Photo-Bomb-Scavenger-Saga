@@ -7,65 +7,101 @@
 //
 
 #include "shooter.h"
+#define RED     ofColor(255,0,0)
+#define GREEN   ofColor(0,255,0)
+#define BLUE    ofColor(0,0,255)
 
 void Shooter::display() {
-    for (int i = 0; i < bullets.size(); i++) {
-        bullets[i].display();
+    if (bullets.size() > 0) {
+        if (!bulletBeingShot) {
+            ofSetColor(bullets[0].color);
+            ofRect(position.x, position.y, bullet_width, bullet_width);
+        }
+        ofSetColor(bullets[1].color);
+        ofRect(position.x, position.y + bullet_width, bullet_width, bullet_width);
+        for (int i = 0; i < bullets.size(); i++) {
+            bullets[i].display();
+        }
     }
 }
 
 void Shooter::create(float x, float y, int w, int h) {
-    bulletBeingShot = -1;
+    bulletBeingShot = false;
     position.set(x, y);
     bullet_width = w;
-    for (int x = 0; x < ofGetWidth(); x+= bullet_width) {
+    //make specific spots for the shot to come from
+    for (int x = 0; x < ofGetWidth(); x+=bullet_width) {
+        crates.push_back(ofPoint(x, y));
+    }
+    
+    int centerCrate = crates.size() / 2;
+    position.set(crates[centerCrate].x, y);
+
+    for (int i = 0; i < 2; i++) {
         Bullet tmpBullet;
         int colorSelect = ofRandom(0,3);
         ofColor tmpColor;
         /* ASSIGN COLOR */
         switch (colorSelect) {
             case 0:
-                tmpColor = ofColor(255,0,0);
+                tmpColor = RED;
                 break;
             case 1:
-                tmpColor = ofColor(0,255,0);
+                tmpColor = GREEN;
                 break;
             case 2:
-                tmpColor = ofColor(0,0,255);
+                tmpColor = BLUE;
                 break;
             default:
                 tmpColor = ofColor(0,0,0);
                 break;
         }
 
-        tmpBullet.create(x, y, bullet_width, bullet_width, tmpColor);
+        tmpBullet.create(bullet_width, bullet_width, tmpColor);
         bullets.push_back(tmpBullet);
     }
+}
+
+void Shooter::move(float x, float y) {
+    float closestCrateDistance = 999999;
+    int closestCrate = -1;
+    for (int i = 0; i < crates.size(); i++) {
+        float distanceToCrate = ofDist(x, y, crates[i].x, crates[i].y);
+        if (distanceToCrate < closestCrateDistance) {
+            closestCrate = i;
+            closestCrateDistance = distanceToCrate;
+        }
+    }
+    position.set(crates[closestCrate].x, crates[closestCrate].y);
 }
 
 void Shooter::reload() {
-    bullets.clear();
-    for (int x = 0; x < ofGetWidth(); x+= bullet_width) {
-    //for (int i = 0; i < 5; i++) {
         Bullet tmpBullet;
-        tmpBullet.create(x, position.y, bullet_width, bullet_width, ofColor(255,255,0));
-        bullets.push_back(tmpBullet);
+    int colorSelect = ofRandom(0,3);
+    ofColor tmpColor;
+    /* ASSIGN COLOR */
+    switch (colorSelect) {
+        case 0:
+            tmpColor = RED;
+            break;
+        case 1:
+            tmpColor = GREEN;
+            break;
+        case 2:
+            tmpColor = BLUE;
+            break;
+        default:
+            tmpColor = ofColor(0,0,0);
+            break;
     }
+
+        tmpBullet.create(bullet_width, bullet_width, tmpColor);
+        bullets.push_back(tmpBullet);
     
 }
 
-void Shooter::shoot(float x) {
-    float touchDistanceToBullet = 999999;
-//    bulletBeingShot = -1;
-    for (int i = 0; i < bullets.size(); i++) {
-        float tmpDistance = abs(bullets[i].position.x - x);
-        if (tmpDistance < touchDistanceToBullet) {
-            bulletBeingShot = i;
-            touchDistanceToBullet = tmpDistance;
-        }
-    }
-    bullets[bulletBeingShot].beingShot = true;
-    Bullet newBullet;
-    newBullet.create(bullets[bulletBeingShot].position.x, position.y, bullet_width, bullet_width, ofColor(255,255,255));
-    bullets.push_back(newBullet);
+void Shooter::shoot() {
+    bullets[0].shoot(position);
+    bulletBeingShot = true;
+    reload();
 }

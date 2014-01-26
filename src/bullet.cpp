@@ -9,19 +9,23 @@
 #include "bullet.h"
 
 void Bullet::display() {
-    ofSetColor(color);
-    ofRect(position.x, position.y, width, height);
     if (beingShot) {
         position.y-=speed;
+        ofSetColor(color);
+        ofRect(position.x, position.y, width, height);
     }
 }
 
-void Bullet::create(float x, float y, int w, int h, ofColor c) {
+void Bullet::create(int w, int h, ofColor c) {
     speed = 3;
     transform = false;
     destroy = false;
-    position.set(x, y);
     color = c;
     width = w;
     height = h;
+}
+
+void Bullet::shoot(ofPoint pos) {
+    position = pos;
+    beingShot = true;
 }

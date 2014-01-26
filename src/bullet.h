@@ -14,8 +14,8 @@ class Bullet {
 public:
 	
 	void display();
-    void create(float x, float y, int w, int h, ofColor c);
-
+    void create(int w, int h, ofColor c);
+    void shoot(ofPoint pos);
     bool beingShot;
     bool transform;
     bool destroy;

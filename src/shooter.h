@@ -15,7 +15,8 @@ public:
 	
 	void display();
     void create(float x, float y, int w, int h);
-    void shoot(float x);
+    void shoot();
+    void move(float x, float y);
     void reload();
     
     ofColor color;
@@ -23,5 +24,6 @@ public:
     int bullet_width;
     float bulletBeingShot;
     vector<Bullet> bullets;
+    vector<ofPoint> crates;
     
 };

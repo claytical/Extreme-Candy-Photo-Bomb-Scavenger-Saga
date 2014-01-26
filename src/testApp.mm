@@ -46,36 +46,39 @@ void testApp::setup(){
                 candies.push_back(tmpCandy);
             }
         }
-    shooter.create(ofGetWidth(), ofGetHeight() - (TOP_PADDING*4), GRID_SQUARE_SIZE, GRID_SQUARE_SIZE);
-    cout << candies.size() << " candies created" << endl;
+    shooter.create(ofGetWidth()/2, ofGetHeight() - (TOP_PADDING*4), GRID_SQUARE_SIZE, GRID_SQUARE_SIZE);
 
 }
 
 //--------------------------------------------------------------
 void testApp::update(){
-    if (shooter.bulletBeingShot != -1) {
+    if (shooter.bulletBeingShot) {
         for (int i = 0; i < candies.size(); i++) {
-            if (hitTest(candies[i], shooter.bullets[shooter.bulletBeingShot])) {
+            if (hitTest(candies[i], shooter.bullets[0])) {
                 cout << "hit something" << endl;
                 //stop the trajectory
-                shooter.bullets[shooter.bulletBeingShot].beingShot = false;
-                shooter.bullets[shooter.bulletBeingShot].transform = true;
+                shooter.bullets[0].beingShot = false;
+                shooter.bullets[0].transform = true;
                 Candy tmpCandy;
-                tmpCandy.create(shooter.bullets[shooter.bulletBeingShot].position.x, candies[i].position.y + GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, shooter.bullets[shooter.bulletBeingShot].color);
+                tmpCandy.create(shooter.bullets[0].position.x, candies[i].position.y + GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, shooter.bullets[0].color);
                 
-                /*
-                if(findNeighbors(tmpCandy)) {
-                    tmpCandy.matched = true;
-                }
-*/
                 candies.push_back(tmpCandy);
                 findMatchingColors(candies[candies.size()-1]);
-                shooter.bulletBeingShot = -1;
+                shooter.bulletBeingShot = false;
                 break;
 
             }
         }
+        if (shooter.bullets[0].position.y <= TOP_PADDING) {
+            Candy tmpCandy;
+            tmpCandy.create(shooter.bullets[0].position.x, TOP_PADDING, GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, shooter.bullets[0].color);
+            candies.push_back(tmpCandy);
+            shooter.bulletBeingShot = false;
+            shooter.bullets[0].transform = true;
+
+        }
     }
+    
     //remove the bullet
     ofRemove(shooter.bullets, done);
     //remove any matched candies
@@ -138,81 +141,6 @@ void testApp::findMatchingColors(Candy &c) {
             }
         }
     }
-}
-
-bool testApp::findNeighbors(Candy c) {
-    if(findNorthernNeighbors(c) || findLeftNeighbors(c) || findRightNeighbors(c)) {
-        return true;
-    }
-    else {
-        return false;
-    }
-}
-bool testApp::findNorthernNeighbors(Candy c) {
-    float neighborX = c.position.x;
-    float neighborY = c.position.y - GRID_SQUARE_SIZE;
-    for (int i = 0; i < candies.size(); i++) {
-        if (candies[i].position.y == neighborY && candies[i].position.x == neighborX && !candies[i].matched) {
-            if (candies[i].color == c.color) {
-                candies[i].matched = true;
-                findNorthernNeighbors(candies[i]);
-                findLeftNeighbors(candies[i]);
-                findRightNeighbors(candies[i]);
-                return true;
-            }
-        }
-    }
-    return false;
-}
-
-bool testApp::findSouthernNeighbors(Candy c) {
-    float neighborX = c.position.x;
-    float neighborY = c.position.y + GRID_SQUARE_SIZE;
-    for (int i = 0; i < candies.size(); i++) {
-        if (candies[i].position.y == neighborY && candies[i].position.x == neighborX && !candies[i].matched) {
-            if (candies[i].color == c.color) {
-                findLeftNeighbors(candies[i]);
-                findRightNeighbors(candies[i]);
-                findSouthernNeighbors(candies[i]);
-                return true;
-            }
-        }
-    }
-    return false;
-}
-
-bool testApp::findLeftNeighbors(Candy c) {
-    float neighborX = c.position.x - GRID_SQUARE_SIZE;
-    float neighborY = c.position.y;
-    for (int i = 0; i < candies.size(); i++) {
-        if (candies[i].position.y == neighborY && candies[i].position.x == neighborX && !candies[i].matched) {
-            if (candies[i].color == c.color) {
-                candies[i].matched = true;
-                findNorthernNeighbors(candies[i]);
-                findSouthernNeighbors(candies[i]);
-                findLeftNeighbors(candies[i]);
-                return true;
-            }
-        }
-    }
-    return false;
-}
-
-bool testApp::findRightNeighbors(Candy c) {
-    float neighborX = c.position.x + GRID_SQUARE_SIZE;
-    float neighborY = c.position.y;
-    for (int i = 0; i < candies.size(); i++) {
-        if (candies[i].position.y == neighborY && candies[i].position.x == neighborX && !candies[i].matched) {
-            if (candies[i].color == c.color) {
-                candies[i].matched = true;
-                findNorthernNeighbors(candies[i]);
-                findSouthernNeighbors(candies[i]);
-                findRightNeighbors(candies[i]);
-                return true;
-            }
-        }
-    }
-    return false;
 }
 
 
@@ -282,17 +210,19 @@ void testApp::exit(){
 
 //--------------------------------------------------------------
 void testApp::touchDown(ofTouchEventArgs & touch){
+    shooter.move(touch.x, touch.y);
 }
 
 //--------------------------------------------------------------
 void testApp::touchMoved(ofTouchEventArgs & touch){
-        
+    shooter.move(touch.x, touch.y);
 }
     
 //--------------------------------------------------------------
 void testApp::touchUp(ofTouchEventArgs & touch){
-    shooter.shoot(touch.x);
-    
+    if (!shooter.bulletBeingShot) {
+        shooter.shoot();
+    }
 }
     
 //--------------------------------------------------------------
