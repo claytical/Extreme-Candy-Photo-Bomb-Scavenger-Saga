@@ -14,7 +14,7 @@ class Bullet {
 public:
 	
 	void display();
-    void create(int w, int h, ofColor c);
+    void create(int w, int h);
     void shoot(ofPoint pos);
     bool beingShot;
     bool transform;
@@ -23,6 +23,7 @@ public:
     ofPoint position;
     int width;
     int height;
+    int type;
     float speed;
     
     

@@ -14,10 +14,37 @@
 void Shooter::display() {
     if (bullets.size() > 0) {
         if (!bulletBeingShot) {
-            ofSetColor(bullets[0].color);
+            switch (bullets[0].type) {
+                case 0:
+                    ofSetColor(255, 0, 0);
+                    break;
+                case 1:
+                    ofSetColor(0, 255, 0);
+                    break;
+                case 2:
+                    ofSetColor(0, 0, 255);
+                    break;
+                    
+                default:
+                    break;
+            }
+//            ofSetColor(bullets[0].color);
             ofRect(position.x, position.y, bullet_width, bullet_width);
         }
-        ofSetColor(bullets[1].color);
+        switch (bullets[1].type) {
+            case 0:
+                ofSetColor(255, 0, 0);
+                break;
+            case 1:
+                ofSetColor(0, 255, 0);
+                break;
+            case 2:
+                ofSetColor(0, 0, 255);
+                break;
+                
+            default:
+                break;
+        }
         ofRect(position.x, position.y + bullet_width, bullet_width, bullet_width);
         for (int i = 0; i < bullets.size(); i++) {
             bullets[i].display();
@@ -57,7 +84,7 @@ void Shooter::create(float x, float y, int w, int h) {
                 break;
         }
 
-        tmpBullet.create(bullet_width, bullet_width, tmpColor);
+        tmpBullet.create(bullet_width, bullet_width);
         bullets.push_back(tmpBullet);
     }
 }
@@ -77,9 +104,10 @@ void Shooter::move(float x, float y) {
 
 void Shooter::reload() {
         Bullet tmpBullet;
-    int colorSelect = ofRandom(0,3);
-    ofColor tmpColor;
+//    int colorSelect = ofRandom(0,3);
+//    ofColor tmpColor;
     /* ASSIGN COLOR */
+/*
     switch (colorSelect) {
         case 0:
             tmpColor = RED;
@@ -94,8 +122,8 @@ void Shooter::reload() {
             tmpColor = ofColor(0,0,0);
             break;
     }
-
-        tmpBullet.create(bullet_width, bullet_width, tmpColor);
+*/
+        tmpBullet.create(bullet_width, bullet_width);
         bullets.push_back(tmpBullet);
     
 }

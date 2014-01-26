@@ -57,7 +57,8 @@ class testApp : public ofxiPhoneApp{
         bool bLearnPhoto;
         bool createGrid;
         bool playing;
-        ofImage redCandy, greenCandy, blueCandy;
+        ofImage candyImages[3];
+        //ofImage redCandy, greenCandy, blueCandy;
 
         vector <Candy> candies;
     
