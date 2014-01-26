@@ -80,7 +80,7 @@ void Shooter::create(float x, float y, int w, int h) {
                 tmpColor = BLUE;
                 break;
             default:
-                tmpColor = ofColor(0,0,0);
+                tmpColor = ofColor(255,255,0);
                 break;
         }
 
@@ -104,25 +104,6 @@ void Shooter::move(float x, float y) {
 
 void Shooter::reload() {
         Bullet tmpBullet;
-//    int colorSelect = ofRandom(0,3);
-//    ofColor tmpColor;
-    /* ASSIGN COLOR */
-/*
-    switch (colorSelect) {
-        case 0:
-            tmpColor = RED;
-            break;
-        case 1:
-            tmpColor = GREEN;
-            break;
-        case 2:
-            tmpColor = BLUE;
-            break;
-        default:
-            tmpColor = ofColor(0,0,0);
-            break;
-    }
-*/
         tmpBullet.create(bullet_width, bullet_width);
         bullets.push_back(tmpBullet);
     

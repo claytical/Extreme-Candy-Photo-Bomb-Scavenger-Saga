@@ -11,28 +11,31 @@
 void Bullet::display() {
     if (beingShot) {
         position.y-=speed;
-        switch (type) {
-            case 0:
-                ofSetColor(255,0,0);
-                break;
-            case 1:
-                ofSetColor(0,255,0);
-                break;
-            case 2:
-                ofSetColor(0,0,255);
-                break;
-                
-            default:
-                break;
-        }
-//        ofSetColor(color);
+        ofSetColor(color);
         ofRect(position.x, position.y, width, height);
     }
 }
 
 void Bullet::create(int w, int h) {
     speed = 20;
-    type = ofRandom(3);
+    type = ofRandom(0,3);
+    switch (type) {
+        case 0:
+           color = ofColor(255,0,0);
+            break;
+        case 1:
+           color = ofColor(0,255,0);
+            break;
+        case 2:
+            color = ofColor(0,0,255);
+            break;
+            
+        default:
+            color = ofColor(255,0,255);
+
+            break;
+    }
+    
     transform = false;
     destroy = false;
     width = w;
