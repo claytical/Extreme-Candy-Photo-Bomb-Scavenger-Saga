@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "testApp.h"
 
-@interface MainMenuViewController : UIViewController
-
+@interface MainMenuViewController : UIViewController {
+    testApp *myApp;
+}
+- (IBAction)playGame:(id)sender;
 @end

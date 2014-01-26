@@ -17,7 +17,9 @@ class Shooter {
 public:
 	
 	void display();
-    void create(float x, float y, int w, int h);
+//    void create(float x, float y, int w, int h);
+    void create(float x, float y, int w, vector<int> b_types);
+
     void shoot();
     void move(float x, float y);
     void reload();

@@ -7,6 +7,7 @@
 //
 
 #import "MainMenuViewController.h"
+#include "ofxiPhoneExtras.h"
 
 @interface MainMenuViewController ()
 
@@ -26,6 +27,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
+    myApp = (testApp*)ofGetAppPtr();
+
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -34,5 +38,12 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (IBAction)playGame:(id)sender {
+    myApp->play();
+}
+
+
+
 
 @end

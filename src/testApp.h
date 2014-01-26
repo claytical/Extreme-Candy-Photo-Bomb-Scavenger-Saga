@@ -8,6 +8,7 @@
 
 #include "candy.h"
 #include "shooter.h"
+#include "scorepop.h"
 
 //ON IPHONE NOTE INCLUDE THIS BEFORE ANYTHING ELSE
 #include "ofxOpenCv.h"
@@ -40,14 +41,23 @@ class testApp : public ofxiPhoneApp{
         bool hitTest(Candy candy, Bullet bullet);
         static bool matched(Candy &candy);
         static bool done(Bullet &bullet);
+        static bool popped(ScorePop &scorepop);
     
     
         void findMatchingColors(Candy &c);
         bool tooManyCandies();
+        bool zappedAllCandies();
+    
+        void play();
+        vector<int> getAmmo();
     
         ofVideoGrabber vidGrabber;
         ofxOpenALSoundPlayer wand;
+        ofxOpenALSoundPlayer firingWand;
+        ofxOpenALSoundPlayer cauldron;
+        ofxOpenALSoundPlayer candySounds[3];
         ofxCvColorImage	colorImg;
+        ofTrueTypeFont messageText;
         Shooter shooter;
     
         float capW;
@@ -64,5 +74,5 @@ class testApp : public ofxiPhoneApp{
         //ofImage redCandy, greenCandy, blueCandy;
 
         vector <Candy> candies;
-    
+        vector<ScorePop> scorePops;
 };

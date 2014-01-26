@@ -1,11 +1,13 @@
+
+#include "testApp.h"
+#include "MainMenuViewController.h"
+
 #define GRID_WIDTH          8
 #define GRID_HEIGHT         5
 #define GRID_SQUARE_SIZE    40
 #define TOP_PADDING         20
 #define STARTING_TIME       10
 #define GAME_LENGTH         30
-
-#include "testApp.h"
 
 #define RED     ofColor(255,0,0)
 #define GREEN   ofColor(0,255,0)
@@ -24,13 +26,21 @@
 #define GAME_OVER_STATE         5
 
 
+MainMenuViewController *mainMenuViewController;
+
 //--------------------------------------------------------------
 void testApp::setup(){	
 	//ofxiPhoneSetOrientation(OFXIPHONE_ORIENTATION_LANDSCAPE_RIGHT);
         candyImages[RED_TYPE].loadImage("red.png");
         candyImages[GREEN_TYPE].loadImage("green.png");
         candyImages[BLUE_TYPE].loadImage("blue.png");
-
+        candySounds[RED_TYPE].loadSound("crunch1.caf");
+        candySounds[GREEN_TYPE].loadSound("crunch2.caf");
+        candySounds[BLUE_TYPE].loadSound("crunch3.caf");
+        firingWand.loadSound("shoot.caf");
+        cauldron.loadSound("bubble.caf");
+        cauldron.setLoop(true);
+        messageText.loadFont("sbn.ttf", 12);
         capW = ofGetWidth();
         capH = ofGetHeight();
 		vidGrabber.initGrabber(capW, capH);
@@ -46,8 +56,14 @@ void testApp::setup(){
         candiesCollected = 0;
         ofEnableAlphaBlending();
         gameState = MAIN_MENU_STATE;
+        mainMenuViewController = [[MainMenuViewController alloc] initWithNibName:@"MainMenuViewController" bundle:nil];
+        [ofxiPhoneGetGLParentView() addSubview:mainMenuViewController.view];
 }
 
+void testApp::play() {
+    gameState = STARTING_STATE;
+    mainMenuViewController.view.hidden = true;
+}
 //--------------------------------------------------------------
 void testApp::update(){
     switch (gameState) {
@@ -56,13 +72,20 @@ void testApp::update(){
         case STARTING_STATE:
             break;
         case TAKE_PICTURE_STATE:
+            vidGrabber.update();
+            if( vidGrabber.getPixels() != NULL ){
+                colorImg.setFromPixels(vidGrabber.getPixels(), capW, capH);
+            }
+            
             break;
         case LOADING_GAME_STATE:
-            shooter.create(ofGetWidth()/2, ofGetHeight() - (TOP_PADDING*4), GRID_SQUARE_SIZE, GRID_SQUARE_SIZE);
+            shooter.create(ofGetWidth()/2, ofGetHeight() - (TOP_PADDING*4), GRID_SQUARE_SIZE, getAmmo());
+//            shooter.create(ofGetWidth()/2, ofGetHeight() - (TOP_PADDING*4), GRID_SQUARE_SIZE, GRID_SQUARE_SIZE);
             randomLevel();
             startTime = ofGetElapsedTimef();
             endTime = startTime + GAME_LENGTH;
             gameState = PLAYING_GAME_STATE;
+            cauldron.stop();
             break;
         case PLAYING_GAME_STATE:
             
@@ -99,9 +122,10 @@ void testApp::update(){
                     
                     if (candiesCollected > 0) {
                         int additionalPoints = (candiesCollected * candiesCollected * 10);
+                        ScorePop tmpPop;
+                        tmpPop.create("+" + ofToString(additionalPoints), shooter.bullets[0].position);
+                        scorePops.push_back(tmpPop);
                         score = score + additionalPoints;
-                        cout << "Additional Points: " << additionalPoints;
-                        cout << "New Score: " << score;
                         candiesCollected = 0;
                         
                     }
@@ -111,11 +135,20 @@ void testApp::update(){
                 ofRemove(shooter.bullets, done);
                 //remove any matched candies
                 ofRemove(candies, matched);
+                //remove score pop messages
+                ofRemove(scorePops, popped);
+            
                 if (ofGetElapsedTimef() > endTime) {
                     gameState = GAME_OVER_STATE;
                 }
 
             if (tooManyCandies()) {
+                gameState = GAME_OVER_STATE;
+            }
+            
+            if (zappedAllCandies()) {
+                float timeBonus = (endTime - ofGetElapsedTimef()) * 10;
+                score += timeBonus;
                 gameState = GAME_OVER_STATE;
             }
 
@@ -138,6 +171,14 @@ bool testApp::done(Bullet &bullet) {
     }
     return false;
 }
+bool testApp::popped(ScorePop &scorepop) {
+    if (scorepop.duration < ofGetElapsedTimef()) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
 
 bool testApp::tooManyCandies() {
     for (int i = 0; i < candies.size(); i++) {
@@ -147,6 +188,15 @@ bool testApp::tooManyCandies() {
     }
     return false;
 }
+
+bool testApp::zappedAllCandies() {
+    if (candies.size() == 0) {
+        return true;
+    }
+    return false;
+}
+
+
 void testApp::findMatchingColors(Candy &c) {
     float upNeighborX = c.position.x;
     float upNeighborY = c.position.y - GRID_SQUARE_SIZE;
@@ -186,6 +236,7 @@ void testApp::findMatchingColors(Candy &c) {
             if (candies[i].matched) {
                 candiesCollected++;
                 c.matched = true;
+                candySounds[candies[i].type].play();
                 findMatchingColors(candies[i]);
             }
         }
@@ -202,7 +253,7 @@ void testApp::draw(){
             break;
         case TAKE_PICTURE_STATE:
             ofSetColor(255, 255, 255);
-            colorImg.draw(0, 0, ofGetWidth(), ofGetHeight());
+            colorImg.draw(0, 0);
             break;
         case LOADING_GAME_STATE:
             break;
@@ -210,20 +261,52 @@ void testApp::draw(){
             for (int i = 0; i < candies.size(); i++) {
                 candies[i].display();
             }
+            for (int i = 0; i < scorePops.size(); i++) {
+                ofSetColor(255, 255, 255);
+                cout << "drawing score pop at " << scorePops[i].position.x << ", " << scorePops[i].position.y << endl;
+                messageText.drawString(scorePops[i].text, scorePops[i].position.x, scorePops[i].position.y);
+            }
             shooter.display();
-
             break;
         case GAME_OVER_STATE:
+            cout << "GAME OVER" << endl;
+            cout << "SCORE: " << score << endl;
             break;
     }
     
 }
 //--------------------------------------------------------------
-void testApp::grabImage() {
-        vidGrabber.update();
-        if( vidGrabber.getPixels() != NULL ){
-            colorImg.setFromPixels(vidGrabber.getPixels(), capW, capH);
+vector<int> testApp::getAmmo() {
+    vector<int> tmpInts;
+    unsigned char * pixels = colorImg.getPixels();
+    
+    for (int x = 0; x < ofGetWidth(); x+= GRID_SQUARE_SIZE) {
+        for (int y = TOP_PADDING; y < ofGetHeight()/2 + TOP_PADDING; y+= GRID_SQUARE_SIZE) {
+            int index = y*ofGetWidth()*3 + x*3;
+            int red = pixels[index];
+            int green = pixels[index+1];
+            int blue = pixels[index+2];
+            
+            if (red > green && red > blue) {
+                tmpInts.push_back(RED_TYPE);
+                cout << "Red Candy"<< endl;
+            }
+            else if  (green > red && green > blue) {
+                cout << "Green Candy" << endl;
+                tmpInts.push_back(GREEN_TYPE);
+            }
+            else if (blue > red && blue > green) {
+                cout << "Blue Candy" << endl;
+                tmpInts.push_back(BLUE_TYPE);
+                
+            }
         }
+    }
+    return tmpInts;
+
+}
+//--------------------------------------------------------------
+void testApp::grabImage() {
 
         candies.clear();
         
@@ -342,6 +425,7 @@ void testApp::touchUp(ofTouchEventArgs & touch){
             break;
         case STARTING_STATE:
             cout << "moving from starting state" << endl;
+            cauldron.play();
             gameState = TAKE_PICTURE_STATE;
 
             break;
@@ -356,11 +440,13 @@ void testApp::touchUp(ofTouchEventArgs & touch){
         case PLAYING_GAME_STATE:
             if (!shooter.bulletBeingShot) {
                 wand.vibrate();
+                firingWand.play();
                 shooter.shoot();
             }
             break;
         case GAME_OVER_STATE:
             cout << "moving from game over state back to main menu" << endl;
+            mainMenuViewController.view.hidden = false;
             gameState = MAIN_MENU_STATE;
             break;
     }
@@ -396,3 +482,4 @@ void testApp::gotMemoryWarning(){
 void testApp::deviceOrientationChanged(int newOrientation){
         
 }
+
