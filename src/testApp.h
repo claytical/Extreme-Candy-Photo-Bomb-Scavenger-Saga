@@ -5,7 +5,7 @@
 #include "ofxiPhone.h"
 #include "ofxiPhoneExtras.h"
 #include "ofxOpenALSoundPlayer.h"
-
+#include "ofxCenteredTrueTypeFont.h"
 #include "candy.h"
 #include "shooter.h"
 #include "scorepop.h"
@@ -65,9 +65,15 @@ class testApp : public ofxiPhoneApp{
         ofxOpenALSoundPlayer candySounds[7];
         ofxOpenALSoundPlayer startSound;
         ofxOpenALSoundPlayer randomTaunt[5];
+        ofxOpenALSoundPlayer introSound;
+        ofxOpenALSoundPlayer soundtrack;
+        ofxOpenALSoundPlayer hurrySound;
+        ofxOpenALSoundPlayer rememberSound;
+        ofxOpenALSoundPlayer themeSound;
         ofxCvColorImage	colorImg;
-        ofTrueTypeFont messageText;
-        ofTrueTypeFont scoreText;
+        ofxCenteredTrueTypeFont messageText;
+        ofxCenteredTrueTypeFont scoreText;
+        ofxCenteredTrueTypeFont scoreTextBig;
         Shooter shooter;
     
         float capW;
@@ -81,10 +87,15 @@ class testApp : public ofxiPhoneApp{
         bool bLearnPhoto;
         bool createGrid;
         bool playing;
+        bool hurryUpPlayed;
         ofImage highscoreImage;
         ofImage candyImages[3][7];
+        ofImage bulletImages[3];
         ofImage gameOverImage;
         ofImage cauldronMask;
+        ofImage hourglassImage;
+        ofImage scoreBarImage;
+        ofImage themeImage;
         vector <Candy> candies;
         vector<ScorePop> scorePops;
 };

@@ -13,26 +13,29 @@
 
 void Shooter::display() {
     ofSetColor(255, 255, 255);
+    candyImages[bullets[1].type].draw(position.x-10, position.y + 60, bullet_width/2, bullet_width/2);
+    for (int i = 0; i < bullets.size(); i++) {
+        bullets[i].display();
+    }
+
+    staff.draw(position.x - 15, position.y, 80, 136);
     if (bullets.size() > 0) {
         if (!bulletBeingShot) {
             candyImages[bullets[0].type].draw(position.x, position.y + 10, bullet_width, bullet_width);
         }
         
-        candyImages[bullets[1].type].draw(position.x-10, position.y + 60, bullet_width/2, bullet_width/2);
-        for (int i = 0; i < bullets.size(); i++) {
-            bullets[i].display();
-        }
+
         ofSetColor(255, 255, 255);
-        staff.draw(position.x - 15, position.y, 80, 136);
     }
 }
 void Shooter::create(float x, float y, int w, vector<int> b_types) {
+    bullets.clear();
     bullet_width = w;
     bulletBeingShot = false;
     position.set(x, y);
-    candyImages[RED_TYPE].loadImage("red.png");
-    candyImages[GREEN_TYPE].loadImage("green.png");
-    candyImages[BLUE_TYPE].loadImage("blue.png");
+    candyImages[RED_TYPE].loadImage("red4.png");
+    candyImages[GREEN_TYPE].loadImage("green4.png");
+    candyImages[BLUE_TYPE].loadImage("blue4.png");
     staff.loadImage("staff.png");
     for (int x = 0; x < ofGetWidth(); x+=w) {
         crates.push_back(ofPoint(x, y));

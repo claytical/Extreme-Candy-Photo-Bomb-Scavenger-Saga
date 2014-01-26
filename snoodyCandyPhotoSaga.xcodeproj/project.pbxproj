@@ -76,6 +76,16 @@
 		6F0B05261895938A00418B49 /* caldron_text_masked.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F0B05251895938A00418B49 /* caldron_text_masked.png */; };
 		6F0B0528189594AD00418B49 /* gameover_candies.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F0B0527189594AD00418B49 /* gameover_candies.png */; };
 		6F0B052A189597C900418B49 /* perp.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6F0B0529189597C900418B49 /* perp.ttf */; };
+		6F0B053018959A8700418B49 /* intro.caf in Resources */ = {isa = PBXBuildFile; fileRef = 6F0B052F18959A8700418B49 /* intro.caf */; };
+		6F0B05361895A6E400418B49 /* hourglass_masked.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F0B05351895A6E400418B49 /* hourglass_masked.png */; };
+		6F0B05381895A9D500418B49 /* score_bar.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F0B05371895A9D500418B49 /* score_bar.png */; };
+		6F0B053A1895AA4A00418B49 /* hourglass_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F0B05391895AA4A00418B49 /* hourglass_white.png */; };
+		6F0B05A11895AC7700418B49 /* score_bar_longer.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F0B05A01895AC7700418B49 /* score_bar_longer.png */; };
+		6F0B05A31895B28000418B49 /* hurryup.caf in Resources */ = {isa = PBXBuildFile; fileRef = 6F0B05A21895B28000418B49 /* hurryup.caf */; };
+		6F0B05A51895B34100418B49 /* gamebg.caf in Resources */ = {isa = PBXBuildFile; fileRef = 6F0B05A41895B34100418B49 /* gamebg.caf */; };
+		6F0B05A71895B46D00418B49 /* remember.caf in Resources */ = {isa = PBXBuildFile; fileRef = 6F0B05A61895B46D00418B49 /* remember.caf */; };
+		6F0B05A91895B50F00418B49 /* game_quote.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F0B05A81895B50F00418B49 /* game_quote.png */; };
+		6F0B05AB1895B6FB00418B49 /* speech.caf in Resources */ = {isa = PBXBuildFile; fileRef = 6F0B05AA1895B6FB00418B49 /* speech.caf */; };
 		BB16EBD20F2B2A9500518274 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB16EBD10F2B2A9500518274 /* OpenGLES.framework */; };
 		BB16EBD90F2B2AB500518274 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB16EBD80F2B2AB500518274 /* QuartzCore.framework */; };
 		BB24DDCA10DA781C00E9C588 /* ofxiphone-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB24DDC910DA781C00E9C588 /* ofxiphone-Info.plist */; };
@@ -214,6 +224,21 @@
 		6F0B05251895938A00418B49 /* caldron_text_masked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = caldron_text_masked.png; path = bin/data/caldron_text_masked.png; sourceTree = "<group>"; };
 		6F0B0527189594AD00418B49 /* gameover_candies.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = gameover_candies.png; path = bin/data/gameover_candies.png; sourceTree = "<group>"; };
 		6F0B0529189597C900418B49 /* perp.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = perp.ttf; path = bin/data/perp.ttf; sourceTree = "<group>"; };
+		6F0B052B189598DB00418B49 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		6F0B052C1895992300418B49 /* Default~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default~iphone.png"; sourceTree = "<group>"; };
+		6F0B052D1895995900418B49 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		6F0B052E189599A200418B49 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		6F0B052F18959A8700418B49 /* intro.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = intro.caf; path = bin/data/intro.caf; sourceTree = "<group>"; };
+		6F0B05321895A04300418B49 /* ofxCenteredTrueTypeFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCenteredTrueTypeFont.h; sourceTree = "<group>"; };
+		6F0B05351895A6E400418B49 /* hourglass_masked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hourglass_masked.png; path = bin/data/hourglass_masked.png; sourceTree = "<group>"; };
+		6F0B05371895A9D500418B49 /* score_bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = score_bar.png; path = bin/data/score_bar.png; sourceTree = "<group>"; };
+		6F0B05391895AA4A00418B49 /* hourglass_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hourglass_white.png; path = bin/data/hourglass_white.png; sourceTree = "<group>"; };
+		6F0B05A01895AC7700418B49 /* score_bar_longer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = score_bar_longer.png; path = bin/data/score_bar_longer.png; sourceTree = "<group>"; };
+		6F0B05A21895B28000418B49 /* hurryup.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = hurryup.caf; path = bin/data/hurryup.caf; sourceTree = "<group>"; };
+		6F0B05A41895B34100418B49 /* gamebg.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = gamebg.caf; path = bin/data/gamebg.caf; sourceTree = "<group>"; };
+		6F0B05A61895B46D00418B49 /* remember.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = remember.caf; path = bin/data/remember.caf; sourceTree = "<group>"; };
+		6F0B05A81895B50F00418B49 /* game_quote.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = game_quote.png; path = bin/data/game_quote.png; sourceTree = "<group>"; };
+		6F0B05AA1895B6FB00418B49 /* speech.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = speech.caf; path = bin/data/speech.caf; sourceTree = "<group>"; };
 		6b907cfbb1b0fede76c41aa0c64ddaf7 /* heap.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = heap.h; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/flann/heap.h; sourceTree = SOURCE_ROOT; };
 		6dd5a3cbb6d5bba1c1354f1b16430892 /* flann.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = flann.hpp; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/flann/flann.hpp; sourceTree = SOURCE_ROOT; };
 		7101cf2125b8b2bf46aa2662e7f42ef2 /* cxcore.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = cxcore.hpp; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv/cxcore.hpp; sourceTree = SOURCE_ROOT; };
@@ -429,6 +454,10 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				6F0B052E189599A200418B49 /* Default-568h@2x.png */,
+				6F0B052D1895995900418B49 /* Default-568h@2x.png */,
+				6F0B052C1895992300418B49 /* Default~iphone.png */,
+				6F0B052B189598DB00418B49 /* Default.png */,
 				6F0B04B91895599A00418B49 /* sounds */,
 				6F0B04B3189550C400418B49 /* fonts */,
 				6F0B04A21894B0AE00418B49 /* MainMenuViewController.h */,
@@ -498,6 +527,11 @@
 		6F0B04981894952C00418B49 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				6F0B05A81895B50F00418B49 /* game_quote.png */,
+				6F0B05A01895AC7700418B49 /* score_bar_longer.png */,
+				6F0B05391895AA4A00418B49 /* hourglass_white.png */,
+				6F0B05371895A9D500418B49 /* score_bar.png */,
+				6F0B05351895A6E400418B49 /* hourglass_masked.png */,
 				6F0B0527189594AD00418B49 /* gameover_candies.png */,
 				6F0B05251895938A00418B49 /* caldron_text_masked.png */,
 				6F0B05141895768900418B49 /* gameTitle_embed@2x.png */,
@@ -549,6 +583,11 @@
 		6F0B04B91895599A00418B49 /* sounds */ = {
 			isa = PBXGroup;
 			children = (
+				6F0B05AA1895B6FB00418B49 /* speech.caf */,
+				6F0B05A61895B46D00418B49 /* remember.caf */,
+				6F0B05A41895B34100418B49 /* gamebg.caf */,
+				6F0B05A21895B28000418B49 /* hurryup.caf */,
+				6F0B052F18959A8700418B49 /* intro.caf */,
 				6F0B051818958B7D00418B49 /* taunt0.caf */,
 				6F0B051918958B7D00418B49 /* taunt1.caf */,
 				6F0B051A18958B7D00418B49 /* taunt2.caf */,
@@ -662,6 +701,7 @@
 		E4D8936A11527B74007E1F53 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				6F0B05321895A04300418B49 /* ofxCenteredTrueTypeFont.h */,
 				E4D8936B11527B74007E1F53 /* main.mm */,
 				E4D8936D11527B74007E1F53 /* testApp.mm */,
 				E4D8936C11527B74007E1F53 /* testApp.h */,
@@ -854,14 +894,19 @@
 				6F0B04F318956C6300418B49 /* blue6.png in Resources */,
 				6F0B0528189594AD00418B49 /* gameover_candies.png in Resources */,
 				6F0B04C0189559A900418B49 /* crunch1.caf in Resources */,
+				6F0B05A51895B34100418B49 /* gamebg.caf in Resources */,
+				6F0B053A1895AA4A00418B49 /* hourglass_white.png in Resources */,
 				6F0B05111895753500418B49 /* Icon@2x.png in Resources */,
+				6F0B05361895A6E400418B49 /* hourglass_masked.png in Resources */,
 				6F0B052018958B7D00418B49 /* taunt2.caf in Resources */,
 				6F0B04FB18956C6300418B49 /* green7.png in Resources */,
 				6F0B04FE18956C6400418B49 /* red2.png in Resources */,
+				6F0B05A11895AC7700418B49 /* score_bar_longer.png in Resources */,
 				6F0B04F518956C6300418B49 /* green1.png in Resources */,
 				6F0B050218956C6400418B49 /* red6.png in Resources */,
 				6F0B04FD18956C6400418B49 /* red1.png in Resources */,
 				6F0B051E18958B7D00418B49 /* taunt0.caf in Resources */,
+				6F0B05A31895B28000418B49 /* hurryup.caf in Resources */,
 				6F0B04A61894B0AE00418B49 /* MainMenuViewController.xib in Resources */,
 				BB24DDCA10DA781C00E9C588 /* ofxiphone-Info.plist in Resources */,
 				6F0B04F018956C6300418B49 /* blue3.png in Resources */,
@@ -872,11 +917,13 @@
 				E41D3ED713B38FB500A75A5D /* Project.xcconfig in Resources */,
 				6F0B04F218956C6300418B49 /* blue5.png in Resources */,
 				6F0B04F818956C6300418B49 /* green4.png in Resources */,
+				6F0B05381895A9D500418B49 /* score_bar.png in Resources */,
 				6F0B052A189597C900418B49 /* perp.ttf in Resources */,
 				6F0B050018956C6400418B49 /* red4.png in Resources */,
 				6F0B04F718956C6300418B49 /* green3.png in Resources */,
 				6F0B05261895938A00418B49 /* caldron_text_masked.png in Resources */,
 				6F0B04F918956C6300418B49 /* green5.png in Resources */,
+				6F0B05A71895B46D00418B49 /* remember.caf in Resources */,
 				6F0B050C1895753500418B49 /* Icon-Small.png in Resources */,
 				6F0B050318956C6400418B49 /* red7.png in Resources */,
 				6F0B04D21895657200418B49 /* crunch4.caf in Resources */,
@@ -896,6 +943,7 @@
 				6F0B04C1189559A900418B49 /* crunch2.caf in Resources */,
 				E41D3EE613B3906D00A75A5D /* CoreOF.xcconfig in Resources */,
 				6F0B052218958B7D00418B49 /* taunt4.caf in Resources */,
+				6F0B053018959A8700418B49 /* intro.caf in Resources */,
 				6F0B04FF18956C6400418B49 /* red3.png in Resources */,
 				6F0B05101895753500418B49 /* Icon~iphone.png in Resources */,
 				6F0B050118956C6400418B49 /* red5.png in Resources */,
@@ -905,7 +953,9 @@
 				6F0B0513189575E000418B49 /* gameTitle_embed.png in Resources */,
 				6F0B04D31895657200418B49 /* crunch5.caf in Resources */,
 				6F0B05051895737500418B49 /* crunch0.caf in Resources */,
+				6F0B05A91895B50F00418B49 /* game_quote.png in Resources */,
 				6F0B04FA18956C6300418B49 /* green6.png in Resources */,
+				6F0B05AB1895B6FB00418B49 /* speech.caf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
