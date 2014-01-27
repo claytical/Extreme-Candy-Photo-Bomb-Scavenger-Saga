@@ -123,6 +123,8 @@ void testApp::update(){
                 candyImages[BLUE_TYPE][i].loadImage("blue"+ofToString(int(ofRandom(7)))+".png");
             }
              */
+            score = 0;
+            hurryUpPlayed = false;
             shooter.create(ofGetWidth()/2, ofGetHeight() - 130, GRID_SQUARE_SIZE, getAmmo());
             randomLevel();
             startTime = ofGetElapsedTimef();
@@ -401,7 +403,7 @@ void testApp::draw(){
             if (highscoreAchieved) {
                 highscoreImage.draw(ofGetWidth()/2 + 30, ofGetHeight()-180, 60, 60);
             }
-            if (score > 1) {
+            if (score > 1 && score <= 1000) {
                 //1 star
                 starImage.draw(ofGetWidth()/2 - 30, ofGetHeight()-80, 60, 60);
             }
