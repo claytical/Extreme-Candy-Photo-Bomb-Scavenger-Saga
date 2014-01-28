@@ -2,6 +2,11 @@
 #include "ofMain.h"
 
 int main(){
-	ofSetupOpenGL(1146,640, OF_FULLSCREEN);			// <-------- setup the GL context
+    ofAppiPhoneWindow * iOSWindow = new ofAppiPhoneWindow();
+    
+    iOSWindow->enableRetinaSupport(); //enable retina!
+    ofSetupOpenGL(iOSWindow, 480, 320, OF_FULLSCREEN);
 	ofRunApp(new testApp);
 }
+
+

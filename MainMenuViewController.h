@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <GameKit/GameKit.h>
 #import "testApp.h"
 
-@interface MainMenuViewController : UIViewController {
+@interface MainMenuViewController : UIViewController <GKLeaderboardViewControllerDelegate> {
     testApp *myApp;
 }
 - (IBAction)playGame:(id)sender;
-- (IBAction)credits:(id)sender;
+- (IBAction)showGamecenter:(id)sender;
+
 @end

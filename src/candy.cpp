@@ -18,6 +18,17 @@ void Candy::display() {
    // ofRect(position.x, position.y, width, height);
 }
 
+bool Candy::shrink() {
+    width--;
+    height--;
+    if (width <= 0 || height <= 0) {
+        return true;
+    }
+    else {
+        return false;
+    }
+    
+}
 void Candy::create(float x, float y, int w, int h, int t, int st, ofImage * img) {
     image = img;
     type = t;

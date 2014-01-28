@@ -14,6 +14,7 @@ public:
 	
 	void display();
     void create(float x, float y, int w, int h, int t, int st, ofImage *);
+    bool shrink();
     ofImage *image;
     ofColor color;
     ofPoint position;

@@ -3,13 +3,13 @@
 #include "MainMenuViewController.h"
 
 #define GRID_WIDTH              8
-#define GRID_HEIGHT             5
+#define GRID_HEIGHT             6
 #define GRID_SQUARE_SIZE        40
 #define TOP_PADDING             60
 #define SCORE_PADDING           10
 #define SCORE_PADDING_BOTTOM    10
 #define STARTING_TIME           10
-#define GAME_LENGTH             30
+#define GAME_LENGTH             60
 #define HURRY_UP_QUEUE          5
 #define RED     ofColor(255,0,0)
 #define GREEN   ofColor(0,255,0)
@@ -26,6 +26,7 @@
 #define LOADING_GAME_STATE      3
 #define PLAYING_GAME_STATE      4
 #define GAME_OVER_STATE         5
+#define GAME_FINISHED           6
 
 
 MainMenuViewController *mainMenuViewController;
@@ -34,6 +35,9 @@ MainMenuViewController *mainMenuViewController;
 void testApp::setup(){	
 	//ofxiPhoneSetOrientation(OFXIPHONE_ORIENTATION_LANDSCAPE_RIGHT);
     player = [NSUserDefaults standardUserDefaults];
+    gameCenter.setup();
+    gameCenter.authenticateGameCenter();
+
     introSound.loadSound("intro.caf");
     hurrySound.loadSound("hurryup.caf");
     soundtrack.loadSound("gamebg.caf");
@@ -57,19 +61,20 @@ void testApp::setup(){
     for (int i = 0; i < 5 ; i++) {
         randomTaunt[i].loadSound("taunt"+ofToString(i)+".caf");
     }
+    candyFallingSound.loadSound("joy.caf");
+    candyFallingSound.setLoop(true);
         hourglassImage.loadImage("hourglass_white.png");
         highscoreImage.loadImage("stars_high_score.png");
         scoreBarImage.loadImage("score_bar_longer.png");
         gameOverImage.loadImage("gameover_candies.png");
         starImage.loadImage("stars_gold_star.png");
-        themeImage.loadImage("game_quote.png");
-        themeSound.loadSound("speech.caf");
+        themeImage.loadImage("casting_spell.png");
         firingWand.loadSound("shoot.caf");
         startSound.loadSound("start.caf");
         cauldron.loadSound("bubble.caf");
         cauldron.setVolume(.8);
         cauldron.setLoop(true);
-        cauldronMask.loadImage("caldron_text_masked.png");
+        cauldronMask.loadImage("cauldron_cast.png");
         scoreText.loadFont("perp.ttf", 15);
         scoreTextBig.loadFont("perp.ttf", 30);
         scoreTextBig.setLetterSpacing(1.1);
@@ -97,7 +102,6 @@ void testApp::setup(){
 void testApp::play() {
     gameState = STARTING_STATE;
     introSound.stop();
-    themeSound.play();
     mainMenuViewController.view.hidden = true;
 }
 //--------------------------------------------------------------
@@ -209,10 +213,21 @@ void testApp::update(){
             if (zappedAllCandies()) {
                 float timeBonus = (endTime - ofGetElapsedTimef()) * 100;
                 score += timeBonus;
+                candyFalling = true;
+                candyFallingSound.play();
+                for (int i = 0; i < 100; i++) {
+                    Explode tmpExplode;
+                    int randomInt = ofRandom(0,3);
+                    tmpExplode.create(&bulletImages[randomInt]);
+                    candyFall.push_back(tmpExplode);
+                }
+
                 gameState = GAME_OVER_STATE;
             }
             if (gameState == GAME_OVER_STATE) {
                 soundtrack.stop();
+                gameCenter.reportScore(score, "30seconds");
+
                 if (score == highscore()) {
                     NSLog(@"New High Score");
                     highscoreAchieved = true;
@@ -225,6 +240,17 @@ void testApp::update(){
     
             break;
         case GAME_OVER_STATE:
+            if (candyFalling) {
+                ofRemove(candyFall, exploded);
+
+            }
+            else {
+                for (int i = 0; i < candies.size(); i++) {
+                    if (candies[i].shrink()) {
+                        gameState = GAME_FINISHED;
+                    }
+                }
+            }
             break;
             
         default:
@@ -247,6 +273,16 @@ int testApp::highscore() {
 bool testApp::matched(Candy &candy) {
     return candy.matched;
 }
+
+bool testApp::exploded(Explode &e) {
+    if (e.position.y > ofGetHeight()) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
 bool testApp::done(Bullet &bullet) {
     if (bullet.transform || bullet.destroy) {
         return true;
@@ -268,7 +304,7 @@ bool testApp::hanging(Candy &candy) {
 
 bool testApp::tooManyCandies() {
     for (int i = 0; i < candies.size(); i++) {
-        if (candies[i].position.y >= 360) {
+        if (candies[i].position.y >= 400) {
             return true;
         }
     }
@@ -362,6 +398,7 @@ void testApp::findMatchingColors(Candy &c) {
 
 //--------------------------------------------------------------
 void testApp::draw(){
+    retina.setupScreenOrtho();
     float sandTimerHeight;
     float sandTimerY;
     switch (gameState) {
@@ -398,6 +435,32 @@ void testApp::draw(){
             scoreTextBig.drawString(ofToString(score), 120, SCORE_PADDING + 40);
             break;
         case GAME_OVER_STATE:
+            //animation
+            ofSetColor(255, 255, 255);
+            if (candyFalling) {
+                for (int i = 0; i < candyFall.size(); i++) {
+                    candyFall[i].display();
+                }
+                if (candyFall.size() == 0) {
+                    candyFalling = false;
+                    candyFallingSound.stop();
+                    gameState = GAME_FINISHED;
+                }
+            }
+            scoreBarImage.draw(0,SCORE_PADDING, 290, 60);
+            hourglassImage.draw(ofGetWidth()-30, SCORE_PADDING, 30, 60);
+            ofSetColor(0, 0, 0);
+            scoreTextBig.drawString(ofToString(score), 120, SCORE_PADDING + 40);
+
+            for (int i = 0; i < candies.size(); i++) {
+                candies[i].display();
+            }
+
+            shooter.display();
+
+            break;
+            
+        case GAME_FINISHED:
             ofSetColor(255, 255, 255);
             gameOverImage.draw(0, ofGetHeight()/4, 320, 162);
             if (highscoreAchieved) {
@@ -409,14 +472,14 @@ void testApp::draw(){
             }
             if (score <= 7000 && score > 1000) {
                 //2 stars
-                starImage.draw(ofGetWidth()/2 - 90, ofGetHeight()-80, 60, 60);
-                starImage.draw(ofGetWidth()/2 - 60 + 90, ofGetHeight()-80, 60, 60);
+                starImage.draw(ofGetWidth()/2 - 65, ofGetHeight()-80, 60, 60);
+                starImage.draw(ofGetWidth()/2 - 65 + 70, ofGetHeight()-80, 60, 60);
 
             }
             if (score > 7000) {
-                starImage.draw(ofGetWidth()/2 - 90, ofGetHeight()-80, 60, 60);
-                starImage.draw(ofGetWidth()/2 - 90 + 90, ofGetHeight()-80, 60, 60);
-                starImage.draw(ofGetWidth()/2 - 90 + 180, ofGetHeight()-80, 60, 60);
+                starImage.draw(ofGetWidth()/2 - 100, ofGetHeight()-80, 60, 60);
+                starImage.draw(ofGetWidth()/2 - 100 + 70, ofGetHeight()-80, 60, 60);
+                starImage.draw(ofGetWidth()/2 - 100 + 140, ofGetHeight()-80, 60, 60);
                 
             }
             ofSetColor(0, 0, 0);
@@ -541,6 +604,8 @@ void testApp::touchDown(ofTouchEventArgs & touch){
             
             break;
         case GAME_OVER_STATE:
+            break;
+        case GAME_FINISHED:
             mainMenuViewController.view.hidden = false;
             gameState = MAIN_MENU_STATE;
             introSound.play();
@@ -580,7 +645,6 @@ void testApp::touchUp(ofTouchEventArgs & touch){
             
             break;
         case STARTING_STATE:
-            themeSound.stop();
             cauldron.play();
             rememberSound.play();
             gameState = TAKE_PICTURE_STATE;

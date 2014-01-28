@@ -44,11 +44,28 @@
     myApp->play();
 }
 
-- (IBAction)credits:(id)sender {
-    CreditsViewController *credits = [[CreditsViewController alloc] initWithNibName:@"CreditsViewController" bundle:nil];
-    [self presentViewController:credits animated:YES completion:nil];
+- (IBAction)showGamecenter:(id)sender {
+    GKLeaderboardViewController *lb = [[GKLeaderboardViewController alloc] init];
+    if(lb != nil){
+        lb.leaderboardDelegate = self;
+        [self presentViewController:lb animated:YES completion:nil];
+        
+    }
+
 }
 
+- (IBAction)showCredits:(id)sender {
+        CreditsViewController *credits = [[CreditsViewController alloc] initWithNibName:@"CreditsViewController" bundle:nil];
+        [self presentViewController:credits animated:YES completion:nil];
+
+}
+
+- (void)leaderboardViewControllerDidFinish:(GKLeaderboardViewController *)viewController
+{
+
+    [self dismissModalViewControllerAnimated:YES];
+    [viewController release];
+}
 
 
 

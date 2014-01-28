@@ -8,6 +8,7 @@
 
 #include "ofMain.h"
 #include "bullet.h"
+
 #define RED_TYPE    0
 #define GREEN_TYPE  1
 #define BLUE_TYPE   2

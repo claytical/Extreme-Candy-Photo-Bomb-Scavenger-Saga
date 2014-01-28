@@ -1,5 +1,6 @@
 #pragma once
 
+//ON IPHONE NOTE INCLUDE THIS BEFORE ANYTHING ELSE
 
 #include "ofMain.h"
 #include "ofxiPhone.h"
@@ -9,9 +10,11 @@
 #include "candy.h"
 #include "shooter.h"
 #include "scorepop.h"
-
-//ON IPHONE NOTE INCLUDE THIS BEFORE ANYTHING ELSE
+#include "ofxEasyRetina.h"
+#include "ofxiOSEAGLView+retinaPatch.h"
+#include "ofxGameCenter.h"
 #include "ofxOpenCv.h"
+#include "explode.h"
 
 //warning video player doesn't currently work - use live video only
 #define _USE_LIVE_VIDEO
@@ -45,6 +48,7 @@ class testApp : public ofxiPhoneApp{
         static bool done(Bullet &bullet);
         static bool popped(ScorePop &scorepop);
         static bool hanging(Candy &c);
+        static bool exploded(Explode &e);
     
         void checkHangers(Candy &c);
         void findMatchingColors(Candy &c);
@@ -69,7 +73,7 @@ class testApp : public ofxiPhoneApp{
         ofxOpenALSoundPlayer soundtrack;
         ofxOpenALSoundPlayer hurrySound;
         ofxOpenALSoundPlayer rememberSound;
-        ofxOpenALSoundPlayer themeSound;
+        ofxOpenALSoundPlayer candyFallingSound;
         ofxCvColorImage	colorImg;
         ofxCenteredTrueTypeFont messageText;
         ofxCenteredTrueTypeFont scoreText;
@@ -89,6 +93,7 @@ class testApp : public ofxiPhoneApp{
         bool createGrid;
         bool playing;
         bool hurryUpPlayed;
+        bool candyFalling;
         ofImage highscoreImage;
         ofImage candyImages[3][7];
         ofImage bulletImages[3];
@@ -98,6 +103,14 @@ class testApp : public ofxiPhoneApp{
         ofImage scoreBarImage;
         ofImage themeImage;
         ofImage starImage;
+        string leaderboardName;         //ID name of your leaderboard for your app
+
         vector <Candy> candies;
         vector<ScorePop> scorePops;
+        vector<Explode> candyFall;
+        ofxEasyRetina retina;
+        ofxGameCenter gameCenter;
+
+        //
+    
 };
